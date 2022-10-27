@@ -1,16 +1,15 @@
 .popup__container {
+  position: relative;
+  margin: 0 auto;
   color: #000;
   background-color: #fff;
   border-radius: 10px;
   min-width: 430px;
-  min-height: 330px;
-  position: fixed;
   z-index: 5;
 }
 
 @media screen and (max-width: 580px) {
   .popup__container {
     min-width: 282px;
-    min-height: 322px;
   }
 }

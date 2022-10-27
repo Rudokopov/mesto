@@ -1,9 +1,21 @@
 .header__logo {
-  padding: 45px 0 41px 0;
+  display: block;
+  background-image: url(../../../images/Icons/logo.svg);
+  max-width: 142px;
+  min-height: 33px;
+  margin: 45px 0 41px 0;
 }
 
 @media screen and (max-width: 880px) {
   .header__logo {
-    padding: 28px 0 31.6px 27px;
+    margin: 28px 0 31.6px 27px;
+  }
+}
+
+@media screen and (max-width: 630px) {
+  .header__logo {
+    background-image: url(../../../images/Icons/Mobile/logo_mob.svg);
+    max-width: 103.74px;
+    min-height: 24.4px;
   }
 }

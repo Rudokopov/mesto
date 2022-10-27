@@ -10,7 +10,7 @@
   <body class="root">
     <div class="page">
       <header class="header">
-        <img src="./images/Icons/logo.svg" alt="Логотип" class="header__logo" />
+        <a class="header__logo"></a>
       </header>
       <main class="main">
         <section class="profile">
@@ -20,67 +20,148 @@
             class="profile__avatar"
           />
           <div class="profile__info">
-            <div class="profile__edit-button"></div>
+            <button
+              type="button"
+              aria-label
+              class="profile__edit-button"
+            ></button>
             <h1 class="profile__user-name">Жак-Ив Кусто</h1>
             <p class="profile__user-description">Исследователь океана</p>
           </div>
-          <div class="add-button"></div>
+          <button type="button" aria-label class="profile__add-button"></button>
         </section>
-        <div class="cards">
+        <section class="cards">
           <div class="card">
-            <img src="./images/Places/Place_1.jpg" alt="" class="card__image" />
-            <p class="card__description">Карачаевск</p>
-            <div class="card__heart-button"></div>
-          </div>
-          <div class="card">
-            <img src="./images/Places/Place_2.jpg" alt="" class="card__image" />
-            <p class="card__description">Гора Эльбрус</p>
-            <div class="card__heart-button"></div>
-          </div>
-          <div class="card">
-            <img src="./images/Places/Place_3.jpg" alt="" class="card__image" />
-            <p class="card__description">Домбай</p>
-            <div class="card__heart-button"></div>
-          </div>
-          <div class="card">
-            <img src="./images/Places/Place_4.jpg" alt="" class="card__image" />
-            <p class="card__description">Гора Эльбрус</p>
-            <div class="card__heart-button"></div>
+            <img
+              src="./images/Places/Place_1.jpg"
+              alt="Карачаевск"
+              class="card__image"
+            />
+            <div class="card__bottom">
+              <h2 class="card__description">Карачаевск</h2>
+              <button
+                type="button"
+                aria-label
+                class="card__heart-button"
+              ></button>
+            </div>
           </div>
           <div class="card">
-            <img src="./images/Places/Place_5.jpg" alt="" class="card__image" />
-            <p class="card__description">Домбай</p>
-            <div class="card__heart-button"></div>
+            <img
+              src="./images/Places/Place_2.jpg"
+              alt="Гора Эльбрус"
+              class="card__image"
+            />
+            <div class="card__bottom">
+              <h2 class="card__description">Гора Эльбрус</h2>
+              <button
+                type="button"
+                aria-label
+                class="card__heart-button"
+              ></button>
+            </div>
           </div>
           <div class="card">
-            <img src="./images/Places/Place_3.jpg" alt="" class="card__image" />
-            <p class="card__description">Карачаево - Черкессия</p>
-            <div class="card__heart-button"></div>
+            <img
+              src="./images/Places/Place_3.jpg"
+              alt="Домбай"
+              class="card__image"
+            />
+            <div class="card__bottom">
+              <h2 class="card__description">Домбай</h2>
+              <button
+                type="button"
+                aria-label
+                class="card__heart-button"
+              ></button>
+            </div>
           </div>
-        </div>
-        <div class="popup">
-          <div class="popup__container">
-            <h2 class="popup__form-title">Редактировать профиль</h2>
-            <form class="popup__form">
-              <div class="popup__form-close-button"></div>
-              <input type="text" value="" class="popup__form-user" />
-              <input
-                type="text"
-                value=""
-                class="popup__form-user-description"
-              />
-              <input
-                type="submit"
-                value="Сохранить"
-                class="popup__form-submtit"
-              />
-            </form>
+          <div class="card">
+            <img
+              src="./images/Places/Place_4.jpg"
+              alt="Гора Эльбрус"
+              class="card__image"
+            />
+            <div class="card__bottom">
+              <h2 class="card__description">Гора Эльбрус</h2>
+              <button
+                type="button"
+                aria-label
+                class="card__heart-button"
+              ></button>
+            </div>
           </div>
-        </div>
+          <div class="card">
+            <img
+              src="./images/Places/Place_5.jpg"
+              alt="Домбай"
+              class="card__image"
+            />
+            <div class="card__bottom">
+              <h2 class="card__description">Домбай</h2>
+              <button
+                type="button"
+                aria-label
+                class="card__heart-button"
+              ></button>
+            </div>
+          </div>
+          <div class="card">
+            <img
+              src="./images/Places/Place_3.jpg"
+              alt="Карачаево - Черкессия"
+              class="card__image"
+            />
+            <div class="card__bottom">
+              <h2 class="card__description">Карачаево - Черкессия</h2>
+              <button
+                type="button"
+                aria-label
+                class="card__heart-button"
+              ></button>
+            </div>
+          </div>
+        </section>
       </main>
       <footer class="footer">
         <p class="footer__copyright">© 2020 Mesto Russia</p>
       </footer>
+      <div class="popup">
+        <div class="popup__container">
+          <h2 class="popup__form-title">Редактировать профиль</h2>
+          <button
+            type="button"
+            aria-label
+            class="popup__form-close-button"
+          ></button>
+          <form class="popup__form">
+            <input
+              name="name"
+              placeholder=""
+              required=""
+              type="text"
+              value=""
+              class="popup__form-input"
+              id="#popup__form-user"
+            />
+            <input
+              name="name"
+              placeholder=""
+              required=""
+              type="text"
+              value=""
+              class="popup__form-input"
+              id="#popup__form-user-description"
+            />
+            <input
+              name="submit"
+              type="submit"
+              value="Сохранить"
+              class="popup__form-submtit"
+            />
+          </form>
+        </div>
+      </div>
     </div>
     <script src="./script/popup.js"></script>
   </body>

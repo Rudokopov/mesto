@@ -1,10 +1,9 @@
 .card__heart-button {
+  all: unset;
   background-image: url(../../../images/Icons/heart.svg);
+  margin-right: 30px;
   width: 22px;
   height: 19px;
-  position: absolute;
-  right: 20px;
-  bottom: 30px;
   transition: opacity 0.3s ease;
   cursor: pointer;
 }
