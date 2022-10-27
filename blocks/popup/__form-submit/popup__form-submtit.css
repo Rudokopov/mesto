@@ -1,0 +1,20 @@
+.popup__form-submtit {
+  margin: 0;
+  padding: 14px 0 18px 0;
+  border-width: 0;
+  color: #fff;
+  background-color: #000;
+  border-radius: 2px;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.popup__form-submtit:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 580px) {
+  .popup__form-submtit {
+    max-width: 238px;
+  }
+}
