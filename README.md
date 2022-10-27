@@ -1,4 +1,4 @@
-# [Проект "Mesto"](https://rudokopov.github.io/Mesto/)
+# [Проект "Mesto"](https://rudokopov.github.io/mesto/)
 
 Проектная работа с упором на понимание javaScript
 
