@@ -7,6 +7,9 @@
   border-radius: 2px;
   transition: opacity 0.3s ease;
   cursor: pointer;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 21.78px;
 }
 
 .popup__form-submtit:hover {
@@ -17,5 +20,7 @@
   .popup__form-submtit {
     max-width: 238px;
     margin-bottom: 25px;
+    font-size: 14px;
+    line-height: 16.94px;
   }
 }

@@ -4,6 +4,11 @@
   max-width: 142px;
   min-height: 33px;
   margin: 45px 0 41px 0;
+  transition: opacity 0.3s ease;
+}
+
+.header__logo:hover {
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 880px) {

@@ -18,26 +18,17 @@ function closePop() {
   popup.classList.remove('popup_opened');
 } 
 
-edditButton.addEventListener("click", () => {
-  openPop(popup);
-});
+edditButton.addEventListener("click", openPop)
+closeButton.addEventListener("click", closePop)
 
-popup.addEventListener("click", (event) => {
-  let isOverlay = event.target.classList.contains("popup");
-  let isClose = event.target.classList.contains("popup__form-close-button");
-
-  if (isOverlay || isClose) {
-    closePop(popup)
-  }
-})
+// Большое вам спасибо, до этого функцию подсмотрел у нашего наставника, на вебинаре и подтянул за уши на этот проект
+// Благодаря вашим замечаниям, пришлось разобраться с кодом, в итоге еще больше начал понимать. ❤️
 
 function formSubmitHandler (evt) {
   evt.preventDefault();
   userName.textContent = userInput.value
-  userInput.value = userName.textContent
   userDescription.textContent = descriptionInput.value;
-  descriptionInput.value = userDescription.textContent;
-  closePop(popup)
+  closePop()
 }
 
 formElement.addEventListener('submit', formSubmitHandler);

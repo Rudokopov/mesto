@@ -17,7 +17,6 @@
 @media screen and (max-width: 630px) {
   .profile {
     margin-bottom: 36px;
-    display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
