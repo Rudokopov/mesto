@@ -1,3 +1,12 @@
+@keyframes popup {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .popup {
   display: none;
   background-color: rgba(0, 0, 0, 0.5);
@@ -9,4 +18,5 @@
   width: 100vw;
   max-width: 1280px;
   min-height: 100%;
+  animation: popup 1s ease;
 }

@@ -162,6 +162,43 @@
           </form>
         </div>
       </div>
+      <!-- popup Добавления нового места -->
+      <div class="popup">
+        <div class="popup__container">
+          <h2 class="popup__form-title">Редактировать профиль</h2>
+          <button
+            type="button"
+            aria-label
+            class="popup__form-close-button"
+          ></button>
+          <form name="form" class="popup__form">
+            <input
+              name="name"
+              placeholder="Имя"
+              required=""
+              type="text"
+              value=""
+              class="popup__form-input"
+              id="#popup__form-user"
+            />
+            <input
+              name="name"
+              placeholder="Описание"
+              required=""
+              type="text"
+              value=""
+              class="popup__form-input"
+              id="#popup__form-user-description"
+            />
+            <input
+              name="submit"
+              type="submit"
+              value="Сохранить"
+              class="popup__form-submtit"
+            />
+          </form>
+        </div>
+      </div>
     </div>
     <script src="./script/popup.js"></script>
   </body>

@@ -21,9 +21,6 @@ function closePop() {
 edditButton.addEventListener("click", openPop)
 closeButton.addEventListener("click", closePop)
 
-// Большое вам спасибо, до этого функцию подсмотрел у нашего наставника, на вебинаре и подтянул за уши на этот проект
-// Благодаря вашим замечаниям, пришлось разобраться с кодом, в итоге еще больше начал понимать. ❤️
-
 function formSubmitHandler (evt) {
   evt.preventDefault();
   userName.textContent = userInput.value
