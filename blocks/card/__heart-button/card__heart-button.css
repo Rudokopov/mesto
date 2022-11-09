@@ -10,8 +10,3 @@
 .card__heart-button:hover {
   opacity: 0.5;
 }
-
-.card__heart-button:active {
-  opacity: 1;
-  background-image: url(../../../images/Icons/heart_active.svg);
-}

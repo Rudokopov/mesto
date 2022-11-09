@@ -30,103 +30,12 @@
           </div>
           <button type="button" aria-label class="profile__add-button"></button>
         </section>
-        <section class="cards">
-          <div class="card">
-            <img
-              src="https://images.unsplash.com/photo-1667312704608-c2c5cc73ea4e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
-              alt="Карачаевск"
-              class="card__image"
-            />
-            <div class="card__bottom">
-              <h2 class="card__description">Карачаевск</h2>
-              <button
-                type="button"
-                aria-label
-                class="card__heart-button"
-              ></button>
-            </div>
-          </div>
-          <div class="card">
-            <img
-              src="https://images.unsplash.com/photo-1667329001918-9acbae14dedc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-              alt="Гора Эльбрус"
-              class="card__image"
-            />
-            <div class="card__bottom">
-              <h2 class="card__description">Гора Эльбрус</h2>
-              <button
-                type="button"
-                aria-label
-                class="card__heart-button"
-              ></button>
-            </div>
-          </div>
-          <div class="card">
-            <img
-              src="https://images.unsplash.com/photo-1667309772953-3ef528f5858d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2940&q=80"
-              alt="Домбай"
-              class="card__image"
-            />
-            <div class="card__bottom">
-              <h2 class="card__description">Домбай</h2>
-              <button
-                type="button"
-                aria-label
-                class="card__heart-button"
-              ></button>
-            </div>
-          </div>
-          <div class="card">
-            <img
-              src="https://images.unsplash.com/photo-1667329001918-9acbae14dedc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-              alt="Гора Эльбрус"
-              class="card__image"
-            />
-            <div class="card__bottom">
-              <h2 class="card__description">Гора Эльбрус</h2>
-              <button
-                type="button"
-                aria-label
-                class="card__heart-button"
-              ></button>
-            </div>
-          </div>
-          <div class="card">
-            <img
-              src="./images/Places/Place_5.jpg"
-              alt="Домбай"
-              class="card__image"
-            />
-            <div class="card__bottom">
-              <h2 class="card__description">Домбай</h2>
-              <button
-                type="button"
-                aria-label
-                class="card__heart-button"
-              ></button>
-            </div>
-          </div>
-          <div class="card">
-            <img
-              src="./images/Places/Place_3.jpg"
-              alt="Карачаево - Черкессия"
-              class="card__image"
-            />
-            <div class="card__bottom">
-              <h2 class="card__description">Карачаево - Черкессия</h2>
-              <button
-                type="button"
-                aria-label
-                class="card__heart-button"
-              ></button>
-            </div>
-          </div>
-        </section>
+        <section class="cards"></section>
       </main>
       <footer class="footer">
         <p class="footer__copyright">© 2020 Mesto Russia</p>
       </footer>
-      <div class="popup">
+      <div class="popup popup-edit">
         <div class="popup__container">
           <h2 class="popup__form-title">Редактировать профиль</h2>
           <button
@@ -134,7 +43,7 @@
             aria-label
             class="popup__form-close-button"
           ></button>
-          <form name="form" class="popup__form">
+          <form name="form" class="popup__form popup__form-edit">
             <input
               name="name"
               placeholder="Имя"
@@ -158,48 +67,62 @@
               type="submit"
               value="Сохранить"
               class="popup__form-submtit"
+              id="popup__form-submtit-profile-edit"
             />
           </form>
         </div>
       </div>
       <!-- popup Добавления нового места -->
-      <div class="popup">
+      <div class="popup popup-place">
         <div class="popup__container">
-          <h2 class="popup__form-title">Редактировать профиль</h2>
+          <h2 class="popup__form-title">Новое место</h2>
           <button
             type="button"
             aria-label
             class="popup__form-close-button"
           ></button>
-          <form name="form" class="popup__form">
+          <form name="form" class="popup__form popup__form-add">
             <input
               name="name"
-              placeholder="Имя"
+              placeholder="Название"
               required=""
               type="text"
               value=""
               class="popup__form-input"
-              id="#popup__form-user"
+              id="#popup__form-place-name"
             />
             <input
-              name="name"
-              placeholder="Описание"
+              name="link"
+              placeholder="Ссылка на картинку"
               required=""
-              type="text"
+              type="link"
               value=""
               class="popup__form-input"
-              id="#popup__form-user-description"
+              id="#popup__form-place-link"
             />
             <input
               name="submit"
               type="submit"
-              value="Сохранить"
+              value="Создать"
               class="popup__form-submtit"
+              id="popup__form-submtit-place"
             />
           </form>
         </div>
       </div>
+      <div class="popup popup-image">
+        <div class="popup-image__container">
+          <button
+            type="button"
+            aria-label
+            class="popup__form-close-button popup__form-image-close-button"
+          ></button>
+          <img src="" alt="" class="popup-image__photo" />
+          <p class="popup-image__text"></p>
+        </div>
+      </div>
     </div>
+    <script src="./script/cardMassive.js"></script>
     <script src="./script/popup.js"></script>
   </body>
 </html>
