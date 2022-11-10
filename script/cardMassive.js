@@ -26,5 +26,13 @@ const initialCards = [
   {
     name: 'Млечный путь',
     link: 'https://images.unsplash.com/photo-1668088274717-4978a16525df?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=599&q=80'
+  },
+  {
+    name: 'Горы',
+    link: 'https://images.unsplash.com/photo-1667812222504-38e589c17bd6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80'
+  },
+  {
+    name: 'Осень',
+    link: 'https://images.unsplash.com/photo-1667984830497-4517b986d911?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80'
   }
 ]; 

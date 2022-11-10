@@ -1,21 +1,20 @@
-const userName = document.querySelector('.profile__user-name');
-const userDescription = document.querySelector('.profile__user-description');
-const editButton = document.querySelector('.profile__edit-button');
-const userInput = document.getElementById('#popup__form-user');
-const descriptionInput = document.getElementById('#popup__form-user-description');
+const userName = document.querySelector('.profile__user-name')
+const userDescription = document.querySelector('.profile__user-description')
+const buttonEdit = document.querySelector('.profile__edit-button')
+const userInput = document.getElementById('#popup__form-user')
+const descriptionInput = document.getElementById('#popup__form-user-description')
 const placeNameInput = document.getElementById('#popup__form-place-name')
 const placeLinkInput = document.getElementById('#popup__form-place-link')
-const formElementEdit = document.querySelector('.popup__form-edit');
+const formElementEdit = document.querySelector('.popup__form-edit')
 const formElementAdd = document.querySelector('.popup__form-add')
-const addButton = document.querySelector('.profile__add-button')
+const buttonAdd = document.querySelector('.profile__add-button')
 const cardContainer = document.querySelector('.cards')
 const card = document.querySelector('.card')
-const cardTemplate = document.querySelector('#card').content.querySelector('.card');
+const cardTemplate = document.querySelector('#card').content.querySelector('.card')
 const popupImage = document.querySelector('.popup-image')
-const likeButton = document.querySelector('.card__heart-button')
+const buttonLike = document.querySelector('.card__heart-button')
 // все попы сайта
 const popupList = document.querySelectorAll('div.popup')
-const popup = document.querySelector('.popup');
 const editPop = document.querySelector('.popup-edit')
 const placePop = document.querySelector('.popup-place')
 
@@ -23,9 +22,9 @@ const placePop = document.querySelector('.popup-place')
 // Цикл для навешивания класса _active, для устранения эффекта появления всплывающих элементов при обновлении страницы
 // Добрый день, если у вас есть какой нибудь совет как правильно реализовать эту функцию, укажите пожалуйста на ревью, спасибо =)
 // const preloadAnimationCanceling = () => { 
-//   popupList.forEach(popup => popup.classList.add('popup_opened')); 
-// }; 
-// window.addEventListener('DOMContentLoaded', preloadAnimationCanceling);
+//   popupList.forEach(popup => popup.classList.add('popup_opened')) 
+// } 
+// window.addEventListener('DOMContentLoaded', preloadAnimationCanceling)
 
 
 
@@ -43,12 +42,12 @@ const removeCardEvent = (evt) => {
 document.addEventListener('click', removeCardEvent)
 // Открытие popup
 const openPop = (popup) => {
-  popup.classList.add('popup_opened');
+  popup.classList.add('popup_opened')
   popup.addEventListener('click', closeButtonEvent)
 }
 // Закрытие popup
 const closePop = (popup) => {
-  popup.classList.remove('popup_opened');
+  popup.classList.remove('popup_opened')
   popup.removeEventListener('click', closeButtonEvent) 
 }
 
@@ -58,27 +57,27 @@ const closeButtonEvent = (evt) => {
   }
 }
 // Кнопки открытия popup
-editButton.addEventListener('click', () => {
-  userInput.value = userName.textContent;
-  descriptionInput.value = userDescription.textContent;
+buttonEdit.addEventListener('click', () => {
+  userInput.value = userName.textContent
+  descriptionInput.value = userDescription.textContent
   openPop(editPop)
 })
 
-addButton.addEventListener('click', () => {
+buttonAdd.addEventListener('click', () => {
   openPop(placePop)
 })
 // Редактирование профиля
-function formSubmitEdit (evt) {
-  evt.preventDefault();
+function handleFormSubmitEdit (evt) {
+  evt.preventDefault()
   userName.textContent = userInput.value
-  userDescription.textContent = descriptionInput.value;
+  userDescription.textContent = descriptionInput.value
   closePop(editPop)
 }
 
-formElementEdit.addEventListener('submit', formSubmitEdit);
+formElementEdit.addEventListener('submit', handleFormSubmitEdit)
 // Добавление новой карточки 
-function formSubmitAdd (evt) {
-  evt.preventDefault();
+function handleFormSubmitAdd (evt) {
+  evt.preventDefault()
   initialCards.name = placeNameInput.value
   initialCards.link = placeLinkInput.value
   renderCard(initialCards)
@@ -86,13 +85,13 @@ function formSubmitAdd (evt) {
   document.querySelector('.popup__form-add').reset()
 }
 
-formElementAdd.addEventListener('submit', formSubmitAdd);
+formElementAdd.addEventListener('submit', handleFormSubmitAdd)
 // Лайк на карточке
-const handleLikeCard = (evt) => {
+const handleCardLike = (evt) => {
   evt.target.classList.toggle('card__heart-button_active')
 }
 // Отрытие попапа по новому
-const renderImageData = (image) => {
+const renderImage = (image) => {
   document.querySelector('.popup-image__photo').src = image.link
   document.querySelector('.popup-image__photo').alt = image.name
   document.querySelector('.popup-image__text').textContent = image.name
@@ -107,13 +106,13 @@ const generateCard = (item) => {
   const titile = newCard.querySelector('.card__description')
   titile.textContent = item.name
 
-  const likeButton = newCard.querySelector('.card__heart-button')
-  likeButton.addEventListener('click', handleLikeCard)
+  const buttonLike = newCard.querySelector('.card__heart-button')
+  buttonLike.addEventListener('click', handleCardLike)
 
   image.addEventListener('click', () => {
-    openPop(popupImage);
-    renderImageData(item);
-    });
+    openPop(popupImage)
+    renderImage(item)
+    })
   
   return newCard
   }
@@ -125,18 +124,3 @@ const renderCard = (item) => {
 initialCards.forEach((item) => {
   renderCard(item)
 })
-
-// Открытие popup с картинкой
-  // const renderImageData = (image) => {
-  //   document.querySelector('.popup-image__photo').src = initialCards.link
-  //   document.querySelector('.popup-image__photo').alt = initialCards.alt
-  //   document.querySelector('.popup-image__text').textContent = initialCards.name
-  // }
-  // const createCard = () => {
-  //   const image = document.querySelector('.card__image');
-  //   image.addEventListener('click', () => {
-  //    openPop(popupImage);
-  //    renderImageData(card);
-  //    });
-  // }
-  // createCard()
