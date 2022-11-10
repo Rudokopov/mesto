@@ -91,6 +91,12 @@ formElementAdd.addEventListener('submit', formSubmitAdd);
 const handleLikeCard = (evt) => {
   evt.target.classList.toggle('card__heart-button_active')
 }
+// Отрытие попапа по новому
+const renderImageData = (image) => {
+  document.querySelector('.popup-image__photo').src = image.link
+  document.querySelector('.popup-image__photo').alt = image.name
+  document.querySelector('.popup-image__text').textContent = image.name
+}
 // Генерация карточки 
 const generateCard = (item) => {
   const newCard = cardTemplate.cloneNode(true)
@@ -103,6 +109,11 @@ const generateCard = (item) => {
 
   const likeButton = newCard.querySelector('.card__heart-button')
   likeButton.addEventListener('click', handleLikeCard)
+
+  image.addEventListener('click', () => {
+    openPop(popupImage);
+    renderImageData(item);
+    });
   
   return newCard
   }
@@ -115,32 +126,17 @@ initialCards.forEach((item) => {
   renderCard(item)
 })
 
-
-
-// Добавление лайка 
-
-// const cardLikeHandler = () => {
-//   document.querySelector('.card__heart-button').addEventListener('click', (evt) => {
-//     evt.target.classList.toggle('card__heart-button_active')
-//   })
-// }
-// cardLikeHandler()
-// // Открытие popup с картинкой
-  const renderImageData = (image) => {
-    document.querySelector('.popup-image__photo').src = initialCards.link
-    document.querySelector('.popup-image__photo').alt = initialCards.alt
-    document.querySelector('.popup-image__text').textContent = initialCards.name
-  }
-  const createCard = () => {
-    const image = document.querySelector('.card__image');
-    image.addEventListener('click', () => {
-     openPop(popupImage);
-     renderImageData(card);
-     });
-  }
-  createCard()
-// }
-
-// initialCards.forEach((item) => {
-//   addCard(item)
-// })
+// Открытие popup с картинкой
+  // const renderImageData = (image) => {
+  //   document.querySelector('.popup-image__photo').src = initialCards.link
+  //   document.querySelector('.popup-image__photo').alt = initialCards.alt
+  //   document.querySelector('.popup-image__text').textContent = initialCards.name
+  // }
+  // const createCard = () => {
+  //   const image = document.querySelector('.card__image');
+  //   image.addEventListener('click', () => {
+  //    openPop(popupImage);
+  //    renderImageData(card);
+  //    });
+  // }
+  // createCard()
