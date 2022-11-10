@@ -8,14 +8,26 @@ const placeLinkInput = document.getElementById('#popup__form-place-link')
 const formElementEdit = document.querySelector('.popup__form-edit');
 const formElementAdd = document.querySelector('.popup__form-add')
 const addButton = document.querySelector('.profile__add-button')
-const cards = document.querySelector('.cards')
+const cardContainer = document.querySelector('.cards')
 const card = document.querySelector('.card')
+const cardTemplate = document.querySelector('#card').content.querySelector('.card');
 const popupImage = document.querySelector('.popup-image')
 const likeButton = document.querySelector('.card__heart-button')
 // все попы сайта
+const popupList = document.querySelectorAll('div.popup')
 const popup = document.querySelector('.popup');
 const editPop = document.querySelector('.popup-edit')
 const placePop = document.querySelector('.popup-place')
+
+// [В РАЗРАБОТКЕ]
+// Цикл для навешивания класса _active, для устранения эффекта появления всплывающих элементов при обновлении страницы
+// Добрый день, если у вас есть какой нибудь совет как правильно реализовать эту функцию, укажите пожалуйста на ревью, спасибо =)
+// const preloadAnimationCanceling = () => { 
+//   popupList.forEach(popup => popup.classList.add('popup_opened')); 
+// }; 
+// window.addEventListener('DOMContentLoaded', preloadAnimationCanceling);
+
+
 
 // Удаление карточек
 const removeCard = (card) => {
@@ -69,58 +81,50 @@ function formSubmitAdd (evt) {
   evt.preventDefault();
   initialCards.name = placeNameInput.value
   initialCards.link = placeLinkInput.value
-  addCard(initialCards)
+  renderCard(initialCards)
   closePop(placePop)
-
-  placeNameInput.value = ''
-  placeLinkInput.value = ''
+  document.querySelector('.popup__form-add').reset()
 }
 
 formElementAdd.addEventListener('submit', formSubmitAdd);
-// добавление карточек
-const addCard = (initialCards) => {
-  const cardContainer = document.createElement('div');
-  cardContainer.classList.add('card');
-  const cardImage = document.createElement('img');
-  cardImage.classList.add('card__image')
-  cardImage.src = initialCards.link
-  const deleteButton = document.createElement('button')
-  deleteButton.classList.add('card__trash-button')
-  const cardBottom = document.createElement('div');
-  cardBottom.classList.add('card__bottom')
-  const cardTitle = document.createElement('h2')
-  cardTitle.classList.add('card__description')
-  cardTitle.textContent = initialCards.name
-  const cardLike = document.createElement('button')
-  cardLike.classList.add('card__heart-button')
 
-  cardContainer.append(cardImage, deleteButton, cardBottom)
-  cardBottom.append(cardTitle, cardLike)
-  cards.prepend(cardContainer)
+
+// Генерация карточки 
+const generateCard = (item) => {
+  const newCard = cardTemplate.cloneNode(true)
+  
+  const image = newCard.querySelector('.card__image')
+  image.src = item.link
+  
+  const titile = newCard.querySelector('.card__description')
+  titile.textContent = item.name
+  
+  return newCard
+  }
 // Добавление лайка 
 
-const cardLikeHandler = () => {
-  document.querySelector('.card__heart-button').addEventListener('click', (evt) => {
-    evt.target.classList.toggle('card__heart-button_active')
-  })
-}
-cardLikeHandler()
-// Открытие popup с картинкой
-  const renderImageData = (image) => {
-    document.querySelector('.popup-image__photo').src = initialCards.link
-    document.querySelector('.popup-image__photo').alt = initialCards.alt
-    document.querySelector('.popup-image__text').textContent = initialCards.name
-  }
-  const createCard = () => {
-    const image = document.querySelector('.card__image');
-    image.addEventListener('click', () => {
-     openPop(popupImage);
-     renderImageData(card);
-     });
-  }
-  createCard()
-}
+// const cardLikeHandler = () => {
+//   document.querySelector('.card__heart-button').addEventListener('click', (evt) => {
+//     evt.target.classList.toggle('card__heart-button_active')
+//   })
+// }
+// cardLikeHandler()
+// // Открытие popup с картинкой
+//   const renderImageData = (image) => {
+//     document.querySelector('.popup-image__photo').src = initialCards.link
+//     document.querySelector('.popup-image__photo').alt = initialCards.alt
+//     document.querySelector('.popup-image__text').textContent = initialCards.name
+//   }
+//   const createCard = () => {
+//     const image = document.querySelector('.card__image');
+//     image.addEventListener('click', () => {
+//      openPop(popupImage);
+//      renderImageData(card);
+//      });
+//   }
+//   createCard()
+// }
 
-initialCards.forEach((item) => {
-  addCard(item)
-})
+// initialCards.forEach((item) => {
+//   addCard(item)
+// })
