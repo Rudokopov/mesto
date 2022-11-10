@@ -87,20 +87,36 @@ function formSubmitAdd (evt) {
 }
 
 formElementAdd.addEventListener('submit', formSubmitAdd);
-
-
+// Лайк на карточке
+const handleLikeCard = (evt) => {
+  evt.target.classList.toggle('card__heart-button_active')
+}
 // Генерация карточки 
 const generateCard = (item) => {
   const newCard = cardTemplate.cloneNode(true)
-  
+
   const image = newCard.querySelector('.card__image')
   image.src = item.link
-  
+
   const titile = newCard.querySelector('.card__description')
   titile.textContent = item.name
+
+  const likeButton = newCard.querySelector('.card__heart-button')
+  likeButton.addEventListener('click', handleLikeCard)
   
   return newCard
   }
+// Добавление карточки 
+const renderCard = (item) => {
+  cardContainer.prepend(generateCard(item))
+}
+// Прогон по массиву 
+initialCards.forEach((item) => {
+  renderCard(item)
+})
+
+
+
 // Добавление лайка 
 
 // const cardLikeHandler = () => {
@@ -110,19 +126,19 @@ const generateCard = (item) => {
 // }
 // cardLikeHandler()
 // // Открытие popup с картинкой
-//   const renderImageData = (image) => {
-//     document.querySelector('.popup-image__photo').src = initialCards.link
-//     document.querySelector('.popup-image__photo').alt = initialCards.alt
-//     document.querySelector('.popup-image__text').textContent = initialCards.name
-//   }
-//   const createCard = () => {
-//     const image = document.querySelector('.card__image');
-//     image.addEventListener('click', () => {
-//      openPop(popupImage);
-//      renderImageData(card);
-//      });
-//   }
-//   createCard()
+  const renderImageData = (image) => {
+    document.querySelector('.popup-image__photo').src = initialCards.link
+    document.querySelector('.popup-image__photo').alt = initialCards.alt
+    document.querySelector('.popup-image__text').textContent = initialCards.name
+  }
+  const createCard = () => {
+    const image = document.querySelector('.card__image');
+    image.addEventListener('click', () => {
+     openPop(popupImage);
+     renderImageData(card);
+     });
+  }
+  createCard()
 // }
 
 // initialCards.forEach((item) => {
