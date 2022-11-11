@@ -15,12 +15,14 @@ const popupImage = document.querySelector('.popup-image')
 const buttonLike = document.querySelector('.card__heart-button')
 // все попы сайта
 const popupList = document.querySelectorAll('div.popup')
-const editPop = document.querySelector('.popup-edit')
+const popEdit = document.querySelector('.popup-edit')
 const placePop = document.querySelector('.popup-place')
 
 // [В РАЗРАБОТКЕ]
 // Цикл для навешивания класса _active, для устранения эффекта появления всплывающих элементов при обновлении страницы
-// Добрый день, если у вас есть какой нибудь совет как правильно реализовать эту функцию, укажите пожалуйста на ревью, спасибо =)
+// Это потому что я забыл вернуть обратно анимации на popup's xD пока пытался реализовать эту функцию))
+// Вообще я в Chrome смотрю, открываю инструменты разработчика и при обновлении страницы можно поймать эффект исчезающих элементов
+// Посоветовали циклом навешать на все элементы анимацию, что бы по необходимости срабатывали, но я не доделал еще эту функцию, что бы не заставили убирать )
 // const preloadAnimationCanceling = () => { 
 //   popupList.forEach(popup => popup.classList.add('popup_opened')) 
 // } 
@@ -29,49 +31,49 @@ const placePop = document.querySelector('.popup-place')
 
 
 // Удаление карточек
-const removeCard = (card) => {
+const cardRemove = (card) => {
   card.remove()
 }
 
-const removeCardEvent = (evt) => {
+const cardRemoveEvent = (evt) => {
   if (evt.target.classList.contains('card__trash-button')) {
-    removeCard(evt.target.closest('.card'))
+    cardRemove(evt.target.closest('.card'))
   }
 }
 
-document.addEventListener('click', removeCardEvent)
+document.addEventListener('click', cardRemoveEvent)
 // Открытие popup
-const openPop = (popup) => {
+const popupOpen = (popup) => {
   popup.classList.add('popup_opened')
-  popup.addEventListener('click', closeButtonEvent)
+  popup.addEventListener('click', buttonCloseEvent)
 }
 // Закрытие popup
-const closePop = (popup) => {
+const popupClose = (popup) => {
   popup.classList.remove('popup_opened')
-  popup.removeEventListener('click', closeButtonEvent) 
+  popup.removeEventListener('click', buttonCloseEvent) 
 }
 
-const closeButtonEvent = (evt) => {
+const buttonCloseEvent = (evt) => {
   if (evt.target.classList.contains('popup__form-close-button')) {
-    closePop(evt.target.closest('.popup'))
+    popupClose(evt.target.closest('.popup'))
   }
 }
 // Кнопки открытия popup
 buttonEdit.addEventListener('click', () => {
   userInput.value = userName.textContent
   descriptionInput.value = userDescription.textContent
-  openPop(editPop)
+  popupOpen(popEdit)
 })
 
 buttonAdd.addEventListener('click', () => {
-  openPop(placePop)
+  popupOpen(placePop)
 })
 // Редактирование профиля
 function handleFormSubmitEdit (evt) {
   evt.preventDefault()
   userName.textContent = userInput.value
   userDescription.textContent = descriptionInput.value
-  closePop(editPop)
+  popupClose(popEdit)
 }
 
 formElementEdit.addEventListener('submit', handleFormSubmitEdit)
@@ -80,8 +82,8 @@ function handleFormSubmitAdd (evt) {
   evt.preventDefault()
   initialCards.name = placeNameInput.value
   initialCards.link = placeLinkInput.value
-  renderCard(initialCards)
-  closePop(placePop)
+  cardRender(initialCards)
+  popupClose(placePop)
   document.querySelector('.popup__form-add').reset()
 }
 
@@ -91,36 +93,37 @@ const handleCardLike = (evt) => {
   evt.target.classList.toggle('card__heart-button_active')
 }
 // Отрытие попапа по новому
-const renderImage = (image) => {
+const imageRender = (image) => {
   document.querySelector('.popup-image__photo').src = image.link
   document.querySelector('.popup-image__photo').alt = image.name
   document.querySelector('.popup-image__text').textContent = image.name
 }
 // Генерация карточки 
-const generateCard = (item) => {
-  const newCard = cardTemplate.cloneNode(true)
+const cardGenerate = (item) => {
+  const cardNew = cardTemplate.cloneNode(true)
 
-  const image = newCard.querySelector('.card__image')
+  const image = cardNew.querySelector('.card__image')
   image.src = item.link
+  image.alt = item.name
 
-  const titile = newCard.querySelector('.card__description')
+  const titile = cardNew.querySelector('.card__description')
   titile.textContent = item.name
 
-  const buttonLike = newCard.querySelector('.card__heart-button')
+  const buttonLike = cardNew.querySelector('.card__heart-button')
   buttonLike.addEventListener('click', handleCardLike)
 
   image.addEventListener('click', () => {
-    openPop(popupImage)
-    renderImage(item)
+    popupOpen(popupImage)
+    imageRender(item)
     })
   
-  return newCard
+  return cardNew
   }
 // Добавление карточки 
-const renderCard = (item) => {
-  cardContainer.prepend(generateCard(item))
+const cardRender = (item) => {
+  cardContainer.prepend(cardGenerate(item))
 }
 // Прогон по массиву 
 initialCards.forEach((item) => {
-  renderCard(item)
+  cardRender(item)
 })
