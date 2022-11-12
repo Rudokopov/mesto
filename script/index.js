@@ -19,10 +19,6 @@ const popEdit = document.querySelector('.popup-edit')
 const placePop = document.querySelector('.popup-place')
 
 // [В РАЗРАБОТКЕ]
-// Цикл для навешивания класса _active, для устранения эффекта появления всплывающих элементов при обновлении страницы
-// Это потому что я забыл вернуть обратно анимации на popup's xD пока пытался реализовать эту функцию))
-// Вообще я в Chrome смотрю, открываю инструменты разработчика и при обновлении страницы можно поймать эффект исчезающих элементов
-// Посоветовали циклом навешать на все элементы анимацию, что бы по необходимости срабатывали, но я не доделал еще эту функцию, что бы не заставили убирать )
 // const preloadAnimationCanceling = () => { 
 //   popupList.forEach(popup => popup.classList.add('popup_opened')) 
 // } 
@@ -31,49 +27,49 @@ const placePop = document.querySelector('.popup-place')
 
 
 // Удаление карточек
-const cardRemove = (card) => {
+const removeCard = (card) => {
   card.remove()
 }
 
-const cardRemoveEvent = (evt) => {
+const handleDeleteCardEvt = (evt) => {
   if (evt.target.classList.contains('card__trash-button')) {
-    cardRemove(evt.target.closest('.card'))
+    removeCard(evt.target.closest('.card'))
   }
 }
 
-document.addEventListener('click', cardRemoveEvent)
+document.addEventListener('click', handleDeleteCardEvt)
 // Открытие popup
-const popupOpen = (popup) => {
+const openPopup = (popup) => {
   popup.classList.add('popup_opened')
-  popup.addEventListener('click', buttonCloseEvent)
+  popup.addEventListener('click', handleCloseButtonEvent)
 }
 // Закрытие popup
-const popupClose = (popup) => {
+const closePopup = (popup) => {
   popup.classList.remove('popup_opened')
-  popup.removeEventListener('click', buttonCloseEvent) 
+  popup.removeEventListener('click', handleCloseButtonEvent) 
 }
 
-const buttonCloseEvent = (evt) => {
+const handleCloseButtonEvent = (evt) => {
   if (evt.target.classList.contains('popup__form-close-button')) {
-    popupClose(evt.target.closest('.popup'))
+    closePopup(evt.target.closest('.popup'))
   }
 }
 // Кнопки открытия popup
 buttonEdit.addEventListener('click', () => {
   userInput.value = userName.textContent
   descriptionInput.value = userDescription.textContent
-  popupOpen(popEdit)
+  openPopup(popEdit)
 })
 
 buttonAdd.addEventListener('click', () => {
-  popupOpen(placePop)
+  openPopup(placePop)
 })
 // Редактирование профиля
 function handleFormSubmitEdit (evt) {
   evt.preventDefault()
   userName.textContent = userInput.value
   userDescription.textContent = descriptionInput.value
-  popupClose(popEdit)
+  closePopup(popEdit)
 }
 
 formElementEdit.addEventListener('submit', handleFormSubmitEdit)
@@ -82,8 +78,8 @@ function handleFormSubmitAdd (evt) {
   evt.preventDefault()
   initialCards.name = placeNameInput.value
   initialCards.link = placeLinkInput.value
-  cardRender(initialCards)
-  popupClose(placePop)
+  renderCard(initialCards)
+  closePopup(placePop)
   document.querySelector('.popup__form-add').reset()
 }
 
@@ -93,13 +89,13 @@ const handleCardLike = (evt) => {
   evt.target.classList.toggle('card__heart-button_active')
 }
 // Отрытие попапа по новому
-const imageRender = (image) => {
+const handlePreviewPicture = (image) => {
   document.querySelector('.popup-image__photo').src = image.link
   document.querySelector('.popup-image__photo').alt = image.name
   document.querySelector('.popup-image__text').textContent = image.name
 }
 // Генерация карточки 
-const cardGenerate = (item) => {
+const createCard = (item) => {
   const cardNew = cardTemplate.cloneNode(true)
 
   const image = cardNew.querySelector('.card__image')
@@ -113,17 +109,17 @@ const cardGenerate = (item) => {
   buttonLike.addEventListener('click', handleCardLike)
 
   image.addEventListener('click', () => {
-    popupOpen(popupImage)
-    imageRender(item)
+    openPopup(popupImage)
+    handlePreviewPicture(item)
     })
   
   return cardNew
   }
 // Добавление карточки 
-const cardRender = (item) => {
-  cardContainer.prepend(cardGenerate(item))
+const renderCard = (item) => {
+  cardContainer.prepend(createCard(item))
 }
 // Прогон по массиву 
 initialCards.forEach((item) => {
-  cardRender(item)
+  renderCard(item)
 })
