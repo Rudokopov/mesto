@@ -1,10 +1,10 @@
 const userName = document.querySelector('.profile__user-name')
 const userDescription = document.querySelector('.profile__user-description')
 const buttonEdit = document.querySelector('.profile__edit-button')
-const userInput = document.getElementById('#popup__form-user')
-const descriptionInput = document.getElementById('#popup__form-user-description')
-const placeNameInput = document.getElementById('#popup__form-place-name')
-const placeLinkInput = document.getElementById('#popup__form-place-link')
+const userInput = document.querySelector('#popup__form-user-name')
+const descriptionInput = document.querySelector('#popup__form-user-description')
+const placeNameInput = document.querySelector('#popup__form-place-name')
+const placeLinkInput = document.querySelector('#popup__form-place-link')
 const formElementEdit = document.querySelector('.popup__form-edit')
 const formElementAdd = document.querySelector('.popup__form-add')
 const buttonAdd = document.querySelector('.profile__add-button')
@@ -13,18 +13,16 @@ const card = document.querySelector('.card')
 const cardTemplate = document.querySelector('#card').content.querySelector('.card')
 const popupImage = document.querySelector('.popup-image')
 const buttonLike = document.querySelector('.card__heart-button')
-// все попы сайта
-const popupList = document.querySelectorAll('div.popup')
+// все попапы сайта
+const popupList = document.querySelectorAll('.popup')
 const popEdit = document.querySelector('.popup-edit')
 const placePop = document.querySelector('.popup-place')
 
-// [В РАЗРАБОТКЕ]
+// [В РАЗРАБОТКЕ] - Применение эффектов анимации после нажатия на объекту, для избежания появления артефактов при загрузке страницы
 // const preloadAnimationCanceling = () => { 
 //   popupList.forEach(popup => popup.classList.add('popup_opened')) 
 // } 
 // window.addEventListener('DOMContentLoaded', preloadAnimationCanceling)
-
-
 
 // Удаление карточек
 const removeCard = (card) => {
@@ -36,23 +34,45 @@ const handleDeleteCardEvt = (evt) => {
     removeCard(evt.target.closest('.card'))
   }
 }
-
-document.addEventListener('click', handleDeleteCardEvt)
-// Открытие popup
-const openPopup = (popup) => {
-  popup.classList.add('popup_opened')
-  popup.addEventListener('click', handleCloseButtonEvent)
+// Закрытие клавишей
+const isClosePopupKey = (evt) => {
+  if (evt.key === 'Escape') {
+    const popupActive = document.querySelector('.popup_opened')
+    closePopup(popupActive)
+  }
 }
 // Закрытие popup
 const closePopup = (popup) => {
+  const formList = document.querySelectorAll('.popup__form')
   popup.classList.remove('popup_opened')
-  popup.removeEventListener('click', handleCloseButtonEvent) 
+  popup.removeEventListener('click', handleCloseButtonEvent)
+
+  formList.forEach(currentForm => {
+    currentForm.reset()
+  })
 }
 
 const handleCloseButtonEvent = (evt) => {
   if (evt.target.classList.contains('popup__form-close-button')) {
     closePopup(evt.target.closest('.popup'))
   }
+}
+// Закрытие кликом на оверлей
+popupList.forEach(item => {
+  item.addEventListener('click', (evt) => {
+    if (evt.target === evt.currentTarget) {
+      closePopup(item)
+    }
+  })
+})
+
+document.addEventListener('click', handleDeleteCardEvt)
+// Открытие popup
+const openPopup = (popup) => {
+  popup.classList.add('popup_opened')
+  popup.addEventListener('click', handleCloseButtonEvent)
+  document.addEventListener('keydown', isClosePopupKey)
+  enableFormValidation()
 }
 // Кнопки открытия popup
 buttonEdit.addEventListener('click', () => {

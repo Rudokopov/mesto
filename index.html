@@ -54,31 +54,39 @@
             aria-label
             class="popup__form-close-button"
           ></button>
-          <form name="form" class="popup__form popup__form-edit">
+          <form name="form" class="popup__form popup__form-edit" novalidate>
             <input
               name="name"
               placeholder="Имя"
-              required=""
+              required
               type="text"
               value=""
-              class="popup__form-input"
-              id="#popup__form-user"
+              class="popup__form-input popup__form-user-name"
+              id="popup__form-user-name"
+              minlength="2"
+              maxlength="40"
             />
+            <span class="popup__form-user-name-error error-message"></span>
             <input
               name="name"
               placeholder="Описание"
-              required=""
+              required
               type="text"
               value=""
-              class="popup__form-input"
-              id="#popup__form-user-description"
+              class="popup__form-input popup__form-user-description"
+              id="popup__form-user-description"
+              minlength="2"
+              maxlength="200"
             />
+            <span
+              class="popup__form-user-description-error error-message"
+            ></span>
             <input
               name="submit"
               type="submit"
               value="Сохранить"
               class="popup__form-submtit"
-              id="popup__form-submtit-profile-edit"
+              id="popup__form-submtit popup__form-submtit-profile-edit"
             />
           </form>
         </div>
@@ -92,31 +100,35 @@
             aria-label
             class="popup__form-close-button"
           ></button>
-          <form name="form" class="popup__form popup__form-add">
+          <form name="form" class="popup__form popup__form-add" novalidate>
             <input
               name="name"
               placeholder="Название"
-              required=""
+              required
               type="text"
               value=""
-              class="popup__form-input"
-              id="#popup__form-place-name"
+              class="popup__form-input popup__form-place-name"
+              id="popup__form-place-name"
+              minlength="2"
+              maxlength="30"
             />
+            <span class="popup__form-place-name-error error-message"></span>
             <input
               name="link"
               placeholder="Ссылка на картинку"
-              required=""
-              type="link"
+              required
+              type="url"
               value=""
               class="popup__form-input"
-              id="#popup__form-place-link"
+              id="popup__form-place-link"
             />
+            <span class="popup__form-place-link-error error-message"></span>
             <input
               name="submit"
               type="submit"
               value="Создать"
               class="popup__form-submtit"
-              id="popup__form-submtit-place"
+              id="popup__form-submtit popup__form-submtit-place"
             />
           </form>
         </div>
@@ -135,5 +147,6 @@
     </div>
     <script src="./script/cardMassive.js"></script>
     <script src="./script/index.js"></script>
+    <script src="./script/validate.js"></script>
   </body>
 </html>
