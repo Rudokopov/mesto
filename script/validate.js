@@ -1,3 +1,11 @@
+ const enableValidation = ({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__form-input',
+  submitButtonSelector: '.popup__form-submtit',
+  inactiveButtonClass: 'popup__form-submtit_disable',
+  inputErrorClass: 'popup__form-input-error',
+}); 
+
 const showInputError = (formElement, formInput, errorMessage) => {
   const formError = formElement.querySelector(`.${formInput.id}-error`)
   formInput.classList.add('popup__form-input-error');
