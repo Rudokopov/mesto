@@ -1,20 +1,20 @@
- const enableValidation = ({
+ const enableValidation = {
   formSelector: '.popup__form',
   inputSelector: '.popup__form-input',
   submitButtonSelector: '.popup__form-submtit',
   inactiveButtonClass: 'popup__form-submtit_disable',
   inputErrorClass: 'popup__form-input-error',
-}); 
+}; 
 
 const showInputError = (formElement, formInput, errorMessage) => {
   const formError = formElement.querySelector(`.${formInput.id}-error`)
-  formInput.classList.add('popup__form-input-error');
+  formInput.classList.add(enableValidation.inputErrorClass)
   formError.textContent = errorMessage
 }
 
 const hideInputError = (formElement, formInput) => {
   const formError = formElement.querySelector(`.${formInput.id}-error`)
-  formInput.classList.remove('popup__form-input-error');
+  formInput.classList.remove(enableValidation.inputErrorClass)
   formError.textContent = ''
 }
 
@@ -27,7 +27,6 @@ const isValid = (formElement, formInput) => {
 }
 
 // Проверка всех полей формы на валидность 
-
 const hasInvalidInput = (inputList) => {
   return inputList.some((formInput) => {
     return !formInput.validity.valid;
@@ -37,10 +36,10 @@ const hasInvalidInput = (inputList) => {
 // Активатор кнопки 
 const toggleButtonState = (inputList, buttonElement) => {
   if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add('popup__form-submtit_disable')
+    buttonElement.classList.add(enableValidation.inactiveButtonClass)
     buttonElement.setAttribute('disabled', true)
   } else {
-    buttonElement.classList.remove('popup__form-submtit_disable')
+    buttonElement.classList.remove(enableValidation.inactiveButtonClass)
     buttonElement.removeAttribute('disabled')
   }
 }

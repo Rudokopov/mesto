@@ -46,7 +46,6 @@ const closePopup = (popup) => {
   const formList = document.querySelectorAll('.popup__form')
   popup.classList.remove('popup_opened')
   popup.removeEventListener('click', handleCloseButtonEvent)
-
   formList.forEach(currentForm => {
     currentForm.reset()
   })
