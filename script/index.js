@@ -13,10 +13,19 @@ const card = document.querySelector('.card')
 const cardTemplate = document.querySelector('#card').content.querySelector('.card')
 const popupImage = document.querySelector('.popup-image')
 const buttonLike = document.querySelector('.card__heart-button')
+const popupPhoto = document.querySelector('.popup-image__photo')
+const popupText = document.querySelector('.popup-image__text')
 // все попапы сайта
 const popupList = document.querySelectorAll('.popup')
 const popEdit = document.querySelector('.popup-edit')
 const placePop = document.querySelector('.popup-place')
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__form-input',
+  submitButtonSelector: '.popup__form-submtit',
+  inactiveButtonClass: 'popup__form-submtit_disable',
+  inputErrorClass: 'popup__form-input-error',
+}; 
 
 // [В РАЗРАБОТКЕ] - Применение эффектов анимации после нажатия на объекту, для избежания появления артефактов при загрузке страницы
 // const preloadAnimationCanceling = () => { 
@@ -25,17 +34,13 @@ const placePop = document.querySelector('.popup-place')
 // window.addEventListener('DOMContentLoaded', preloadAnimationCanceling)
 
 // Удаление карточек
-const removeCard = (card) => {
-  card.remove()
-}
-
-const handleDeleteCardEvt = (evt) => {
+const handleDeleteCardEvt = (evt, card) => {
   if (evt.target.classList.contains('card__trash-button')) {
-    removeCard(evt.target.closest('.card'))
+    evt.target.closest('.card').remove()
   }
 }
 // Закрытие клавишей
-const isClosePopupKey = (evt) => {
+const closePopupByEscKey = (evt) => {
   if (evt.key === 'Escape') {
     const popupActive = document.querySelector('.popup_opened')
     closePopup(popupActive)
@@ -43,12 +48,9 @@ const isClosePopupKey = (evt) => {
 }
 // Закрытие popup
 const closePopup = (popup) => {
-  const formList = document.querySelectorAll('.popup__form')
   popup.classList.remove('popup_opened')
   popup.removeEventListener('click', handleCloseButtonEvent)
-  formList.forEach(currentForm => {
-    currentForm.reset()
-  })
+  document.removeEventListener('keydown', closePopupByEscKey)
 }
 
 const handleCloseButtonEvent = (evt) => {
@@ -70,8 +72,7 @@ document.addEventListener('click', handleDeleteCardEvt)
 const openPopup = (popup) => {
   popup.classList.add('popup_opened')
   popup.addEventListener('click', handleCloseButtonEvent)
-  document.addEventListener('keydown', isClosePopupKey)
-  enableFormValidation()
+  document.addEventListener('keydown', closePopupByEscKey)
 }
 // Кнопки открытия popup
 buttonEdit.addEventListener('click', () => {
@@ -81,37 +82,37 @@ buttonEdit.addEventListener('click', () => {
 })
 
 buttonAdd.addEventListener('click', () => {
+  formElementAdd.reset()
   openPopup(placePop)
 })
 // Редактирование профиля
-function handleFormSubmitEdit (evt) {
+function handleFormEditSubmit (evt) {
   evt.preventDefault()
   userName.textContent = userInput.value
   userDescription.textContent = descriptionInput.value
   closePopup(popEdit)
 }
 
-formElementEdit.addEventListener('submit', handleFormSubmitEdit)
+formElementEdit.addEventListener('submit', handleFormEditSubmit)
 // Добавление новой карточки 
-function handleFormSubmitAdd (evt) {
+function handleFormAddSubmit (evt) {
   evt.preventDefault()
   initialCards.name = placeNameInput.value
   initialCards.link = placeLinkInput.value
   renderCard(initialCards)
   closePopup(placePop)
-  document.querySelector('.popup__form-add').reset()
 }
 
-formElementAdd.addEventListener('submit', handleFormSubmitAdd)
+formElementAdd.addEventListener('submit', handleFormAddSubmit)
 // Лайк на карточке
 const handleCardLike = (evt) => {
   evt.target.classList.toggle('card__heart-button_active')
 }
 // Отрытие попапа по новому
 const handlePreviewPicture = (image) => {
-  document.querySelector('.popup-image__photo').src = image.link
-  document.querySelector('.popup-image__photo').alt = image.name
-  document.querySelector('.popup-image__text').textContent = image.name
+  popupPhoto.src = image.link
+  popupPhoto.alt = image.name
+  popupText.textContent = image.name
 }
 // Генерация карточки 
 const createCard = (item) => {
@@ -130,7 +131,7 @@ const createCard = (item) => {
   image.addEventListener('click', () => {
     openPopup(popupImage)
     handlePreviewPicture(item)
-    })
+  })
   
   return cardNew
   }

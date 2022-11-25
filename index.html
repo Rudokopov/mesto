@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./pages/index.css" />
     <title>Место</title>
+    <script defer src="./script/cardsArray.js"></script>
+    <script defer src="./script/index.js"></script>
+    <script defer src="./script/validate.js"></script>
   </head>
   <body class="root">
     <div class="page">
@@ -22,13 +25,17 @@
           <div class="profile__info">
             <button
               type="button"
-              aria-label
+              aria-label="Открытие формы с редактированием профиля"
               class="profile__edit-button"
             ></button>
             <h1 class="profile__user-name">Metropoliten</h1>
             <p class="profile__user-description">Underground hides secrets</p>
           </div>
-          <button type="button" aria-label class="profile__add-button"></button>
+          <button
+            type="button"
+            aria-label="Открытие формы с добавлением места"
+            class="profile__add-button"
+          ></button>
         </section>
         <section class="cards">
           <template id="card">
@@ -51,7 +58,7 @@
           <h2 class="popup__form-title">Редактировать профиль</h2>
           <button
             type="button"
-            aria-label
+            aria-label="Закрыть форму"
             class="popup__form-close-button"
           ></button>
           <form name="form" class="popup__form popup__form-edit" novalidate>
@@ -60,7 +67,6 @@
               placeholder="Имя"
               required
               type="text"
-              value=""
               class="popup__form-input popup__form-user-name"
               id="popup__form-user-name"
               minlength="2"
@@ -72,7 +78,6 @@
               placeholder="Описание"
               required
               type="text"
-              value=""
               class="popup__form-input popup__form-user-description"
               id="popup__form-user-description"
               minlength="2"
@@ -97,7 +102,7 @@
           <h2 class="popup__form-title">Новое место</h2>
           <button
             type="button"
-            aria-label
+            aria-label="Закрыть форму"
             class="popup__form-close-button"
           ></button>
           <form name="form" class="popup__form popup__form-add" novalidate>
@@ -106,7 +111,6 @@
               placeholder="Название"
               required
               type="text"
-              value=""
               class="popup__form-input popup__form-place-name"
               id="popup__form-place-name"
               minlength="2"
@@ -118,7 +122,6 @@
               placeholder="Ссылка на картинку"
               required
               type="url"
-              value=""
               class="popup__form-input"
               id="popup__form-place-link"
             />
@@ -137,7 +140,7 @@
         <div class="popup-image__container">
           <button
             type="button"
-            aria-label
+            aria-label="Закрыть форму"
             class="popup__form-close-button popup__form-image-close-button"
           ></button>
           <img class="popup-image__photo" />
@@ -145,8 +148,5 @@
         </div>
       </div>
     </div>
-    <script src="./script/cardMassive.js"></script>
-    <script src="./script/index.js"></script>
-    <script src="./script/validate.js"></script>
   </body>
 </html>
