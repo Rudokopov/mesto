@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./pages/index.css" />
     <title>Место</title>
-    <script defer src="./script/cardsArray.js"></script>
-    <script defer src="./script/index.js"></script>
-    <script defer src="./script/validate.js"></script>
   </head>
   <body class="root">
     <div class="page">
@@ -16,41 +13,39 @@
         <a href="#" class="header__logo"></a>
       </header>
       <main class="main">
-        <content>
-          <section class="profile">
-            <img
-              src="./images/avatar_metro.jpg"
-              alt="Аватар пользователя"
-              class="profile__avatar"
-            />
-            <div class="profile__info">
-              <button
-                type="button"
-                aria-label="Открытие формы с редактированием профиля"
-                class="profile__edit-button"
-              ></button>
-              <h1 class="profile__user-name">Metropoliten</h1>
-              <p class="profile__user-description">Underground hides secrets</p>
-            </div>
+        <section class="profile">
+          <img
+            src="./images/avatar_metro.jpg"
+            alt="Аватар пользователя"
+            class="profile__avatar"
+          />
+          <div class="profile__info">
             <button
               type="button"
-              aria-label="Открытие формы с добавлением места"
-              class="profile__add-button"
+              aria-label="Открытие формы с редактированием профиля"
+              class="profile__edit-button"
             ></button>
-          </section>
-          <section class="cards">
-            <template id="card">
-              <div class="card">
-                <img class="card__image" />
-                <button class="card__trash-button"></button>
-                <div class="card__bottom">
-                  <h2 class="card__description"></h2>
-                  <button class="card__heart-button"></button>
-                </div>
+            <h1 class="profile__user-name">Metropoliten</h1>
+            <p class="profile__user-description">Underground hides secrets</p>
+          </div>
+          <button
+            type="button"
+            aria-label="Открытие формы с добавлением места"
+            class="profile__add-button"
+          ></button>
+        </section>
+        <section class="cards">
+          <template id="card">
+            <div class="card">
+              <img class="card__image" />
+              <button class="card__trash-button"></button>
+              <div class="card__bottom">
+                <h2 class="card__description"></h2>
+                <button class="card__heart-button"></button>
               </div>
-            </template>
-          </section>
-        </content>
+            </div>
+          </template>
+        </section>
       </main>
       <footer class="footer">
         <p class="footer__copyright">© 2020 Mesto Russia</p>
@@ -150,5 +145,9 @@
         </div>
       </div>
     </div>
+    <!-- Не получилось разместить скрипт в head, автотесты при загрузке работы не пускали никак, мол порядок расположения блоков нарушен :/ -->
+    <script defer src="./script/cardsArray.js"></script>
+    <script defer src="./script/index.js"></script>
+    <script defer src="./script/validate.js"></script>
   </body>
 </html>
