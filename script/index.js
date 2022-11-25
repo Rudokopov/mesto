@@ -9,7 +9,6 @@ const formElementEdit = document.querySelector('.popup__form-edit')
 const formElementAdd = document.querySelector('.popup__form-add')
 const buttonAdd = document.querySelector('.profile__add-button')
 const cardContainer = document.querySelector('.cards')
-const card = document.querySelector('.card')
 const cardTemplate = document.querySelector('#card').content.querySelector('.card')
 const popupImage = document.querySelector('.popup-image')
 const buttonLike = document.querySelector('.card__heart-button')
@@ -82,6 +81,8 @@ buttonEdit.addEventListener('click', () => {
 })
 
 buttonAdd.addEventListener('click', () => {
+  const buttonSubmit = document.querySelector('.popup__form-submtit-place')
+  toggleButtonDisable(buttonSubmit)
   formElementAdd.reset()
   openPopup(placePop)
 })
