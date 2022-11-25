@@ -1,4 +1,12 @@
- const showInputError = (formElement, formInput, errorMessage) => {
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__form-input',
+  submitButtonSelector: '.popup__form-submtit',
+  inactiveButtonClass: 'popup__form-submtit_disable',
+  inputErrorClass: 'popup__form-input-error',
+}; 
+
+const showInputError = (formElement, formInput, errorMessage) => {
   const formError = formElement.querySelector(`.${formInput.id}-error`)
   formInput.classList.add(validationConfig.inputErrorClass)
   formError.textContent = errorMessage
@@ -59,12 +67,10 @@ const setEventListeners = (formElement) => {
 }
 
 // Добавляем всем формам слушатель
-const enableFormValidation = (arrayParameters) => {
-  const {inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass} = arrayParameters
+const enableFormValidation = (validationConfig) => {
+  const {inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass} = validationConfig
   const formList = Array.from(document.querySelectorAll(validationConfig.formSelector))
-  formList.forEach(formElement => {
-    setEventListeners(formElement, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass)
+  formList.forEach(validationConfig => {
+    setEventListeners(validationConfig)
   })
 }
-
-enableFormValidation(validationConfig)

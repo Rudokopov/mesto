@@ -18,13 +18,6 @@ const popupText = document.querySelector('.popup-image__text')
 const popupList = document.querySelectorAll('.popup')
 const popEdit = document.querySelector('.popup-edit')
 const placePop = document.querySelector('.popup-place')
-const validationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__form-input',
-  submitButtonSelector: '.popup__form-submtit',
-  inactiveButtonClass: 'popup__form-submtit_disable',
-  inputErrorClass: 'popup__form-input-error',
-}; 
 
 // [В РАЗРАБОТКЕ] - Применение эффектов анимации после нажатия на объекту, для избежания появления артефактов при загрузке страницы
 // const preloadAnimationCanceling = () => { 
@@ -144,3 +137,5 @@ const renderCard = (item) => {
 initialCards.forEach((item) => {
   renderCard(item)
 })
+
+enableFormValidation(validationConfig)
