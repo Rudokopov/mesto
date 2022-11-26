@@ -6,15 +6,15 @@ const validationConfig = {
   inputErrorClass: 'popup__form-input-error',
 }; 
 
-const showInputError = (formElement, formInput, errorMessage) => {
+const showInputError = (formElement, formInput, errorMessage, inputErrorClass) => {
   const formError = formElement.querySelector(`.${formInput.id}-error`)
-  formInput.classList.add(validationConfig.inputErrorClass)
+  formInput.classList.add(inputErrorClass)
   formError.textContent = errorMessage
 }
 
-const hideInputError = (formElement, formInput) => {
+const hideInputError = (formElement, formInput, inputErrorClass) => {
   const formError = formElement.querySelector(`.${formInput.id}-error`)
-  formInput.classList.remove(validationConfig.inputErrorClass)
+  formInput.classList.remove(inputErrorClass)
   formError.textContent = ''
 }
 
@@ -35,12 +35,10 @@ const hasInvalidInput = (inputList) => {
 
 // Деактиватор кнопки 
 const toggleButtonDisable = (buttonElement) => {
-  buttonElement.classList.add(validationConfig.inactiveButtonClass)
   buttonElement.setAttribute('disabled', true)
 }
 // Активатор кнопки
 const toggleButtonActive = (buttonElement) => {
-  buttonElement.classList.remove(validationConfig.inactiveButtonClass)
   buttonElement.removeAttribute('disabled')
 }
 
@@ -54,7 +52,7 @@ const toggleButtonState = (inputList, buttonElement) => {
 }
 
 // Добавляем слушатели
-const setEventListeners = (formElement) => {
+const setEventListeners = (formElement, validationConfig) => {
   const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
   const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector)
   toggleButtonState(inputList, buttonElement)
@@ -70,7 +68,13 @@ const setEventListeners = (formElement) => {
 const enableFormValidation = (validationConfig) => {
   const {inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass} = validationConfig
   const formList = Array.from(document.querySelectorAll(validationConfig.formSelector))
-  formList.forEach(validationConfig => {
-    setEventListeners(validationConfig)
+  formList.forEach(formElement => {
+    setEventListeners(formElement, validationConfig)
   })
 }
+
+// Спасибо вам большое за то что так расписали каждый пункт, я реально не понимал в чем проблема
+// Честно признаюсь я и сейчас не до конца понимаю все что касается объектов, которые хранят в себе другие параметры
+// Я сделал как вы и сказали, поменял название в главном скрипте и глянул как поведет себя код
+// Отталкиваясь от этого сделал по такому принципу, ну и заодно дошло что кнопкам можно просто Disable стилизовать xD
+// Хотя я и сейчас не уверен в правильности своего решения, эта тема реально для меня слишком сложная :(
