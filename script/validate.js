@@ -18,11 +18,11 @@ const hideInputError = (formElement, formInput, inputErrorClass) => {
   formError.textContent = ''
 }
 
-const toggleInputErrorState = (formElement, formInput) => {
+const toggleInputErrorState = (formElement, formInput, inputErrorClass) => {
   if (!formInput.validity.valid) {
-    showInputError(formElement, formInput, formInput.validationMessage)
+    showInputError(formElement, formInput, formInput.validationMessage, inputErrorClass)
   } else {
-    hideInputError(formElement, formInput)
+    hideInputError(formElement, formInput, inputErrorClass)
   }
 }
 
@@ -52,13 +52,13 @@ const toggleButtonState = (inputList, buttonElement) => {
 }
 
 // Добавляем слушатели
-const setEventListeners = (formElement, validationConfig) => {
+const setEventListeners = (formElement, validationConfig, inputErrorClass) => {
   const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
   const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector)
   toggleButtonState(inputList, buttonElement)
   inputList.forEach(formInput => {
     formInput.addEventListener('input', () => {
-      toggleInputErrorState(formElement, formInput)
+      toggleInputErrorState(formElement, formInput, inputErrorClass)
       toggleButtonState(inputList, buttonElement);
     })
   })
@@ -66,15 +66,18 @@ const setEventListeners = (formElement, validationConfig) => {
 
 // Добавляем всем формам слушатель
 const enableFormValidation = (validationConfig) => {
-  const {inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass} = validationConfig
   const formList = Array.from(document.querySelectorAll(validationConfig.formSelector))
   formList.forEach(formElement => {
     setEventListeners(formElement, validationConfig)
   })
 }
 
-// Спасибо вам большое за то что так расписали каждый пункт, я реально не понимал в чем проблема
-// Честно признаюсь я и сейчас не до конца понимаю все что касается объектов, которые хранят в себе другие параметры
-// Я сделал как вы и сказали, поменял название в главном скрипте и глянул как поведет себя код
-// Отталкиваясь от этого сделал по такому принципу, ну и заодно дошло что кнопкам можно просто Disable стилизовать xD
-// Хотя я и сейчас не уверен в правильности своего решения, эта тема реально для меня слишком сложная :(
+// И снова добрый вечерочек, последняя интерация еще никогда так не держала в тонусе))
+// Ждал ответа наставника, что бы сверить правки, так то я еще вчера все сделал, но выходные, никто не отвечал
+// Запутался с этими конфигами, скорее риторический вопрос, строка 61, так получается у меня конфиг уже передан 
+// Я думал было бы логичнее добавить так validationConfig.inputerrorclass (повесить сразу на toggle)
+// Потом думаю, вы сказали лучше класс передать, этого достаточно, я собственно так и сделал, думаю так понятнее выглядит 
+// А еще подумал, можно же в слушатель добавить (строка 60) inputerrorclass параметром, и передать его непосредственно на toggle
+// Все эти варианты работают, я пытался сломать что бы собрать и разобраться, но ниче не сломалось xD, поэтому запутался
+// Но щас вроде все встало на свои места, походу все оставшееся время до нового спринта буду курить объекты 
+// Спасибо за прожарку, реально ценный опыт который заставляет вникать еще больше, прошлые ревью после вашего вообще не ощущались))
