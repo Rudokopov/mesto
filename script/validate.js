@@ -52,13 +52,13 @@ const toggleButtonState = (inputList, buttonElement) => {
 }
 
 // Добавляем слушатели
-const setEventListeners = (formElement, validationConfig, inputErrorClass) => {
+const setEventListeners = (formElement, validationConfig) => {
   const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
   const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector)
   toggleButtonState(inputList, buttonElement)
   inputList.forEach(formInput => {
     formInput.addEventListener('input', () => {
-      toggleInputErrorState(formElement, formInput, inputErrorClass)
+      toggleInputErrorState(formElement, formInput, validationConfig.inputErrorClass)
       toggleButtonState(inputList, buttonElement);
     })
   })
