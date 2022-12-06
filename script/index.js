@@ -52,7 +52,7 @@ const handleCloseButtonEvent = (evt) => {
 }
 // Закрытие кликом на оверлей
 popupList.forEach(item => {
-  item.addEventListener('click', (evt) => {
+  item.addEventListener('mousedown', (evt) => {
     if (evt.target === evt.currentTarget) {
       closePopup(item)
     }
