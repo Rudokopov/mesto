@@ -27,12 +27,6 @@ export default class Card {
       .addEventListener("click", () => {
         this._handleCardLike();
       });
-
-    // this._element
-    //   .querySelector(".card__image")
-    //   .addEventListener("click", () => {
-    //     this._handlePreviewPicture();
-    //   });
   }
 
   /*------------------------------Функции------------------------------------*/
@@ -47,15 +41,6 @@ export default class Card {
       .querySelector(".card__heart-button")
       .classList.toggle("card__heart-button_active");
   }
-
-  // _handlePreviewPicture() {
-  //   const popupImage = document.querySelector(".popup-image");
-  //   popupImage.querySelector(".popup-image__photo").src = this._image;
-  //   popupImage.querySelector(".popup-image__photo").alt = this._name;
-  //   popupImage.querySelector(".popup-image__text").textContent = this._name;
-  //   openPopup(popupImage);
-  // }
-
   /*------------------------------Создаем карточку------------------------------------*/
 
   generateCard() {

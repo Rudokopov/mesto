@@ -1,4 +1,13 @@
+const validationConfig = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__form-input",
+  submitButtonSelector: ".popup__form-submtit",
+  inactiveButtonClass: "popup__form-submtit_disable",
+  inputErrorClass: "popup__form-input-error",
+};
+
 import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
 
 const userName = document.querySelector(".profile__user-name");
 const userDescription = document.querySelector(".profile__user-description");
@@ -18,6 +27,15 @@ const cardContainer = document.querySelector(".cards");
 const popupList = document.querySelectorAll(".popup");
 const popEdit = document.querySelector(".popup-edit");
 const placePop = document.querySelector(".popup-place");
+
+const addFormValidation = new FormValidator(validationConfig, formElementAdd);
+addFormValidation.enableValidation();
+
+const editProfileFormaValidation = new FormValidator(
+  validationConfig,
+  formElementEdit
+);
+editProfileFormaValidation.enableValidation();
 
 /*----------------------------Статичный функционал--------------------------------------*/
 
@@ -60,12 +78,12 @@ const openPopup = (popup) => {
 buttonEdit.addEventListener("click", () => {
   userInput.value = userName.textContent;
   descriptionInput.value = userDescription.textContent;
+  // editProfileFormaValidation.disableSubmitButton();
   openPopup(popEdit);
 });
 
 buttonAdd.addEventListener("click", () => {
-  const buttonSubmit = document.querySelector(".popup__form-submtit-place");
-  // toggleButtonDisable(buttonSubmit);
+  // const buttonSubmit = document.querySelector(".popup__form-submtit-place");
   formElementAdd.reset();
   openPopup(placePop);
 });
