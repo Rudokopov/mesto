@@ -6,8 +6,9 @@ const validationConfig = {
   inputErrorClass: "popup__form-input-error",
 };
 
-import Card from "./Card.js";
+import { Card } from "./Card.js";
 import FormValidator from "./FormValidator.js";
+import { closePopup, openPopup } from "./utils.js";
 
 const userName = document.querySelector(".profile__user-name");
 const userDescription = document.querySelector(".profile__user-description");
@@ -27,6 +28,7 @@ const cardContainer = document.querySelector(".cards");
 const popupList = document.querySelectorAll(".popup");
 const popEdit = document.querySelector(".popup-edit");
 const placePop = document.querySelector(".popup-place");
+// const allImages = document.querySelectorAll(".card__image");
 
 const addFormValidation = new FormValidator(validationConfig, formElementAdd);
 addFormValidation.enableValidation();
@@ -39,25 +41,6 @@ editProfileFormaValidation.enableValidation();
 
 /*----------------------------Статичный функционал--------------------------------------*/
 
-// Закрытие клавишей
-const closePopupByEscKey = (evt) => {
-  if (evt.key === "Escape") {
-    const popupActive = document.querySelector(".popup_opened");
-    closePopup(popupActive);
-  }
-};
-// Закрытие popup
-const closePopup = (popup) => {
-  popup.classList.remove("popup_opened");
-  popup.removeEventListener("click", handleCloseButtonEvent);
-  document.removeEventListener("keydown", closePopupByEscKey);
-};
-
-const handleCloseButtonEvent = (evt) => {
-  if (evt.target.classList.contains("popup__form-close-button")) {
-    closePopup(evt.target.closest(".popup"));
-  }
-};
 // Закрытие кликом на оверлей
 popupList.forEach((item) => {
   item.addEventListener("mousedown", (evt) => {
@@ -67,24 +50,16 @@ popupList.forEach((item) => {
   });
 });
 
-// Открытие popup
-const openPopup = (popup) => {
-  popup.classList.add("popup_opened");
-  popup.addEventListener("click", handleCloseButtonEvent);
-  document.addEventListener("keydown", closePopupByEscKey);
-};
-
 // Кнопки открытия popup
 buttonEdit.addEventListener("click", () => {
   userInput.value = userName.textContent;
   descriptionInput.value = userDescription.textContent;
-  // editProfileFormaValidation.disableSubmitButton();
   openPopup(popEdit);
 });
 
 buttonAdd.addEventListener("click", () => {
-  // const buttonSubmit = document.querySelector(".popup__form-submtit-place");
   formElementAdd.reset();
+  addFormValidation.disableSubmitButton();
   openPopup(placePop);
 });
 // Редактирование профиля
@@ -96,18 +71,10 @@ function handleFormEditSubmit(evt) {
 }
 formElementEdit.addEventListener("submit", handleFormEditSubmit);
 
-/*-----------------------------Открытие превью картинки-------------------------------------*/
-const handlePreviewPicture = () => {
-  const allImages = document.querySelectorAll(".card__image");
-  allImages.forEach((item) => {
-    item.addEventListener("click", () => {
-      const popupImage = document.querySelector(".popup-image");
-      popupImage.querySelector(".popup-image__photo").src = item.src;
-      popupImage.querySelector(".popup-image__photo").alt = item.alt;
-      popupImage.querySelector(".popup-image__text").textContent = item.alt;
-      openPopup(popupImage);
-    });
-  });
+const makeNewCard = () => {
+  const card = new Card(initialCards);
+  const cardElement = card.generateCard();
+  cardContainer.prepend(cardElement);
 };
 
 /*---------------------Добавление карточки с формы-------------------------*/
@@ -118,10 +85,7 @@ function handleFormAddSubmit(evt) {
   initialCards.name = placeNameInput.value;
   initialCards.image = placeLinkInput.value;
 
-  const card = new Card(initialCards);
-  const cardElement = card.generateCard();
-  cardContainer.prepend(cardElement);
-  handlePreviewPicture();
+  makeNewCard(initialCards.name, initialCards.image);
   closePopup(placePop);
 }
 
@@ -129,13 +93,10 @@ formElementAdd.addEventListener("submit", handleFormAddSubmit);
 
 const renderCards = () => {
   initialCards.forEach((item) => {
-    const card = new Card(item);
-    const cardElement = card.generateCard();
-
-    // Добавляем карточки в DOM
-    cardContainer.prepend(cardElement);
+    initialCards.name = item.name;
+    initialCards.image = item.image;
+    makeNewCard(initialCards.name, initialCards.image);
   });
 };
 
 renderCards();
-handlePreviewPicture();
