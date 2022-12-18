@@ -1,5 +1,3 @@
-const popupImage = document.querySelector(".popup-image");
-
 // Закрытие клавишей
 const closePopupByEscKey = (evt) => {
   if (evt.key === "Escape") {
@@ -26,10 +24,4 @@ const openPopup = (popup) => {
   document.addEventListener("keydown", closePopupByEscKey);
 };
 
-export {
-  popupImage,
-  closePopupByEscKey,
-  closePopup,
-  handleCloseButtonEvent,
-  openPopup,
-};
+export { closePopupByEscKey, closePopup, handleCloseButtonEvent, openPopup };

@@ -28,7 +28,8 @@ const cardContainer = document.querySelector(".cards");
 const popupList = document.querySelectorAll(".popup");
 const popEdit = document.querySelector(".popup-edit");
 const placePop = document.querySelector(".popup-place");
-// const allImages = document.querySelectorAll(".card__image");
+
+export const popupImage = document.querySelector(".popup-image");
 
 const addFormValidation = new FormValidator(validationConfig, formElementAdd);
 addFormValidation.enableValidation();
@@ -74,7 +75,7 @@ formElementEdit.addEventListener("submit", handleFormEditSubmit);
 const makeNewCard = () => {
   const card = new Card(initialCards);
   const cardElement = card.generateCard();
-  cardContainer.prepend(cardElement);
+  return cardElement;
 };
 
 /*---------------------Добавление карточки с формы-------------------------*/
@@ -85,7 +86,8 @@ function handleFormAddSubmit(evt) {
   initialCards.name = placeNameInput.value;
   initialCards.image = placeLinkInput.value;
 
-  makeNewCard(initialCards.name, initialCards.image);
+  const cardElement = makeNewCard(initialCards.name, initialCards.image);
+  cardContainer.prepend(cardElement);
   closePopup(placePop);
 }
 
@@ -95,8 +97,13 @@ const renderCards = () => {
   initialCards.forEach((item) => {
     initialCards.name = item.name;
     initialCards.image = item.image;
-    makeNewCard(initialCards.name, initialCards.image);
+    const cardElement = makeNewCard(initialCards.name, initialCards.image);
+    cardContainer.prepend(cardElement);
   });
 };
 
 renderCards();
+
+{
+  popupImage;
+}

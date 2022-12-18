@@ -1,4 +1,5 @@
-import { popupImage, openPopup } from "./utils.js";
+import { popupImage } from "./index.js";
+import { openPopup } from "./utils.js";
 class Card {
   constructor(data) {
     this._element = this._getTemplate();
@@ -61,14 +62,14 @@ class Card {
   /*------------------------------Создаем карточку------------------------------------*/
 
   generateCard() {
-    this._setEventListeners(); // так он и так перед return вызывается, вы о чем?
+    this._setEventListeners();
     this._cardImage = this._element.querySelector(".card__image");
 
     this._cardImage.src = this._image;
     this._cardImage.alt = this._name;
     this._element.querySelector(".card__description").textContent = this._name;
 
-    return this._element; // <------------ Это ретерн
+    return this._element;
   }
 }
 
