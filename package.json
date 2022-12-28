@@ -1,0 +1,23 @@
+{
+  "name": "yandex.practicum",
+  "version": "0.0.1",
+  "description": "Learning platform",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rudokopov/mesto.git"
+  },
+  "keywords": [
+    "Pavel",
+    "Uzuniants"
+  ],
+  "author": "Pavel Uzuniants",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rudokopov/mesto/issues"
+  },
+  "homepage": "https://github.com/Rudokopov/mesto#readme"
+}
