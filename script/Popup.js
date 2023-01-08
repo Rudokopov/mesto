@@ -3,7 +3,6 @@ export default class Popup {
     this._popup = popup;
     this._closeButton = this._popup.querySelector('.popup__form-close-button');
     this._handleEscClose = this._handleEscClose.bind(this);
-    this.setEventListeners();
   }
 
   open() {
@@ -24,10 +23,11 @@ export default class Popup {
 
   setEventListeners() {
     this._popup.addEventListener('mousedown', (evt) => {
-      if (
-        evt.target.classList.contains('popup_opened') ||
-        evt.target.classList.contains('popup__form-close-button')
-      ) {
+      if (evt.target.classList.contains('popup_opened')) {
+        this.close();
+      }
+
+      if (evt.target.classList.contains('popup__form-close-button')) {
         this.close();
       }
     });

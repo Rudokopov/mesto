@@ -9,17 +9,16 @@ const validationConfig = {
 import { Card } from './Card.js';
 import FormValidator from './FormValidator.js';
 import Section from './Section.js';
-// import { closePopup, openPopup } from './utils.js';
 import Popup from './Popup.js';
 import PopupWithImage from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
+import UserInfo from './UserInfo.js';
 
 const userName = document.querySelector('.profile__user-name');
 const userDescription = document.querySelector('.profile__user-description');
 const buttonEdit = document.querySelector('.profile__edit-button');
-const userInput = document.querySelector('#popup__form-user-name');
-const descriptionInput = document.querySelector(
-  '#popup__form-user-description'
-);
+const userInput = document.querySelector('#user');
+const descriptionInput = document.querySelector('#description');
 const placeNameInput = document.querySelector('#popup__form-place-name');
 const placeLinkInput = document.querySelector('#popup__form-place-link');
 const formElementEdit = document.querySelector('.popup__form-edit');
@@ -45,28 +44,43 @@ editProfileFormaValidation.enableValidation();
 
 /*----------------------------Статичный функционал--------------------------------------*/
 
-// Кнопки открытия popup
-buttonEdit.addEventListener('click', () => {
-  userInput.value = userName.textContent;
-  descriptionInput.value = userDescription.textContent;
-  const popup = new Popup(popEdit);
-  popup.open();
+const userProfile = new UserInfo({
+  name: userName,
+  description: userDescription,
 });
+
+// Кнопки открытия popup
+// buttonEdit.addEventListener('click', () => {
+//   userInput.value = userName.textContent;
+//   descriptionInput.value = userDescription.textContent;
+//   const popup = new Popup(popEdit);
+//   popup.open();
+// });
+
+const openProfile = () => {
+  const data = userProfile.getUserInfo();
+  edditPopup.setInputValues(data);
+  editProfileFormaValidation.disableSubmitButton();
+
+  edditPopup.open();
+};
+
+buttonEdit.addEventListener('click', openProfile);
 
 buttonAdd.addEventListener('click', () => {
   formElementAdd.reset();
   addFormValidation.disableSubmitButton();
-  const popup = new Popup(placePop);
+  const popup = new PopupWithForm(placePop, addNewCard);
   popup.open();
 });
 // Редактирование профиля
-function handleFormEditSubmit(evt) {
-  evt.preventDefault();
-  userName.textContent = userInput.value;
-  userDescription.textContent = descriptionInput.value;
-  closePopup(popEdit);
-}
-formElementEdit.addEventListener('submit', handleFormEditSubmit);
+// function handleFormEditSubmit(evt) {
+//   evt.preventDefault();
+//   userName.textContent = userInput.value;
+//   userDescription.textContent = descriptionInput.value;
+// closePopup(popEdit);
+// }
+// formElementEdit.addEventListener('submit', handleFormEditSubmit);
 
 const makeNewCard = () => {
   const card = new Card(initialCards);
@@ -79,20 +93,17 @@ const imagePop = new PopupWithImage(popupImageContainer);
 const handleCardClick = (image, name) => {
   imagePop.open(image, name);
 };
-/*---------------------Добавление карточки с формы-------------------------*/
 
-function handleFormAddSubmit(evt) {
-  evt.preventDefault();
+const addNewCard = (data) => {
+  const card = new Card(data, handleCardClick);
+  const cardElement = card.generateCard();
+  newCard.addItem(cardElement);
+};
 
-  initialCards.name = placeNameInput.value;
-  initialCards.image = placeLinkInput.value;
-
-  const cardElement = makeNewCard(initialCards.name, initialCards.image);
-  cardContainer.prepend(cardElement);
-  closePopup(placePop);
-}
-
-formElementAdd.addEventListener('submit', handleFormAddSubmit);
+const editProfileInformation = () => {
+  const data = { author: userInput.value, info: descriptionInput.value };
+  userProfile.setUserInfo(data);
+};
 
 const newCard = new Section(
   {
@@ -107,3 +118,12 @@ const newCard = new Section(
 );
 
 newCard.renderItems();
+
+const edditPopup = new PopupWithForm(popEdit, editProfileInformation);
+edditPopup.setEventListeners();
+
+const placeAddPopup = new PopupWithForm(placePop, addNewCard);
+placeAddPopup.setEventListeners();
+
+const imagePopup = new PopupWithImage(popupImageContainer);
+imagePopup.setEventListeners();
