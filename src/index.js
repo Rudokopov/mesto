@@ -5,7 +5,7 @@ const validationConfig = {
   inactiveButtonClass: 'popup__form-submtit_disable',
   inputErrorClass: 'popup__form-input-error',
 };
-import '../pages/index.css';
+import './pages/index.css';
 import { Card } from './Card.js';
 import FormValidator from './FormValidator.js';
 import Section from './Section.js';
