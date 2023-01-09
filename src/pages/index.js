@@ -6,7 +6,7 @@ const validationConfig = {
   inputErrorClass: 'popup__form-input-error',
 };
 
-import './pages/index.css';
+import './index.css';
 import { initialCards } from '../components/cardsArray.js';
 import { Card } from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
