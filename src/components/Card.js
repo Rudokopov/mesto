@@ -1,5 +1,3 @@
-import PopupWithImage from './PopupWithImage.js';
-
 class Card {
   constructor(data, handleCardClick) {
     this._element = this._getTemplate();

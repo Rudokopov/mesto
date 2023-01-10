@@ -1,39 +1,34 @@
-const validationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__form-input',
-  submitButtonSelector: '.popup__form-submtit',
-  inactiveButtonClass: 'popup__form-submtit_disable',
-  inputErrorClass: 'popup__form-input-error',
-};
+/* Хочу заранее принести извиниться за то, что 2 раза на абум сдавал работу без сверки по чек листу и отнял ваше и свое время
+обычно я так не поступаю :/
+И хочу поблагодарить за развернутые и понятые требования по проектной работе!)
+*/
 
 import './index.css';
-import { initialCards } from '../components/cardsArray.js';
+import { initialCards } from '../data/cardsArray.js';
 import { Card } from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
-import Popup from '../components/Popup.js';
+
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 
-const userName = document.querySelector('.profile__user-name');
-const userDescription = document.querySelector('.profile__user-description');
-const buttonEdit = document.querySelector('.profile__edit-button');
-const userInput = document.querySelector('#user');
-const descriptionInput = document.querySelector('#description');
-const placeNameInput = document.querySelector('#popup__form-place-name');
-const placeLinkInput = document.querySelector('#popup__form-place-link');
-const formElementEdit = document.querySelector('.popup__form-edit');
-const formElementAdd = document.querySelector('.popup__form-add');
-const buttonAdd = document.querySelector('.profile__add-button');
-
-const cardContainer = document.querySelector('.cards');
-
-const popupList = document.querySelectorAll('.popup');
-const popEdit = document.querySelector('.popup-edit');
-const placePop = document.querySelector('.popup-place');
-
-export const popupImageContainer = document.querySelector('.popup-image');
+// Constants
+import {
+  userName,
+  userDescription,
+  buttonEdit,
+  userInput,
+  descriptionInput,
+  formElementEdit,
+  formElementAdd,
+  buttonAdd,
+  cardContainer,
+  popEdit,
+  placePop,
+  popupImageContainer,
+  validationConfig,
+} from '../components/constants';
 
 const addFormValidation = new FormValidator(validationConfig, formElementAdd);
 addFormValidation.enableValidation();
@@ -51,14 +46,6 @@ const userProfile = new UserInfo({
   description: userDescription,
 });
 
-// Кнопки открытия popup
-// buttonEdit.addEventListener('click', () => {
-//   userInput.value = userName.textContent;
-//   descriptionInput.value = userDescription.textContent;
-//   const popup = new Popup(popEdit);
-//   popup.open();
-// });
-
 const openProfile = () => {
   const data = userProfile.getUserInfo();
   edditPopup.setInputValues(data);
@@ -67,39 +54,26 @@ const openProfile = () => {
   edditPopup.open();
 };
 
-buttonEdit.addEventListener('click', openProfile);
-
-buttonAdd.addEventListener('click', () => {
+const openPlace = () => {
   formElementAdd.reset();
   addFormValidation.disableSubmitButton();
-  const popup = new PopupWithForm(placePop, addNewCard);
-  popup.open();
-});
-// Редактирование профиля
-// function handleFormEditSubmit(evt) {
-//   evt.preventDefault();
-//   userName.textContent = userInput.value;
-//   userDescription.textContent = descriptionInput.value;
-// closePopup(popEdit);
-// }
-// formElementEdit.addEventListener('submit', handleFormEditSubmit);
-
-const makeNewCard = () => {
-  const card = new Card(initialCards);
-  const cardElement = card.generateCard();
-  return cardElement;
+  placeAddPopup.open();
 };
 
-/*---------------------Открытие попапа с картинкой-------------------------*/
-const imagePop = new PopupWithImage(popupImageContainer);
-const handleCardClick = (image, name) => {
-  imagePop.open(image, name);
-};
+buttonEdit.addEventListener('click', openProfile);
 
-const addNewCard = (data) => {
+buttonAdd.addEventListener('click', openPlace);
+
+const makeNewCard = (data) => {
   const card = new Card(data, handleCardClick);
   const cardElement = card.generateCard();
   newCard.addItem(cardElement);
+  // return cardElement;
+};
+
+/*---------------------Открытие попапа с картинкой-------------------------*/
+const handleCardClick = (image, name) => {
+  imagePop.open(image, name);
 };
 
 const editProfileInformation = () => {
@@ -122,10 +96,10 @@ const newCard = new Section(
 newCard.renderItems();
 
 const edditPopup = new PopupWithForm(popEdit, editProfileInformation);
-edditPopup.setEventListeners();
-
-const placeAddPopup = new PopupWithForm(placePop, addNewCard);
-placeAddPopup.setEventListeners();
-
+const placeAddPopup = new PopupWithForm(placePop, makeNewCard);
 const imagePopup = new PopupWithImage(popupImageContainer);
+const imagePop = new PopupWithImage(popupImageContainer);
+
+edditPopup.setEventListeners();
+placeAddPopup.setEventListeners();
 imagePopup.setEventListeners();

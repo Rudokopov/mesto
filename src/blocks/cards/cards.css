@@ -1,5 +1,6 @@
 .cards {
   max-width: 880px;
+  min-height: 50vh;
   margin: 0 auto 66px auto;
   grid-column-gap: 17px;
   grid-row-gap: 20px;

@@ -5,13 +5,7 @@ export default class PopupWithForm extends Popup {
     super(popup);
     this._handleSubmitForm = handleSubmitForm;
     this._inputList = this._popup.querySelectorAll('.popup__form-input');
-    // this._popupTextValue = this._popup.querySelector('.popup__form-place-name');
-    // this._popupLinkValue = this._popup.querySelector('#popup__form-place-link');
-  }
-
-  close() {
     super.close();
-    // console.log('salam');
   }
 
   _getInputValues() {

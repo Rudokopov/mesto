@@ -1,5 +1,6 @@
 .card {
   width: 282px;
+  max-height: 384.5px;
   position: relative;
   overflow: hidden;
   background-color: #fff;

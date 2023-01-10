@@ -27,6 +27,7 @@
 }
 
 .popup__form-submtit:disabled {
+  cursor: default;
   background-color: #fff;
   color: #000;
   border: 1px solid #000;
