@@ -1,11 +1,3 @@
-export const validationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__form-input',
-  submitButtonSelector: '.popup__form-submtit',
-  inactiveButtonClass: 'popup__form-submtit_disable',
-  inputErrorClass: 'popup__form-input-error',
-};
-
 export const userName = document.querySelector('.profile__user-name');
 export const userDescription = document.querySelector(
   '.profile__user-description'
@@ -18,6 +10,9 @@ export const placeLinkInput = document.querySelector('#popup__form-place-link');
 export const formElementEdit = document.querySelector('.popup__form-edit');
 export const formElementAdd = document.querySelector('.popup__form-add');
 export const buttonAdd = document.querySelector('.profile__add-button');
+export const addPlaceSubmitButton = document.querySelector(
+  '.popup__form-submtit-place'
+);
 
 export const cardContainer = document.querySelector('.cards');
 

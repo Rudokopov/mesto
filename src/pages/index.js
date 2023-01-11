@@ -8,6 +8,7 @@ import { initialCards } from '../data/cardsArray.js';
 import { Card } from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
+import { validationConfig } from '../data/cardsArray.js';
 
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
@@ -27,7 +28,7 @@ import {
   popEdit,
   placePop,
   popupImageContainer,
-  validationConfig,
+  addPlaceSubmitButton,
 } from '../components/constants';
 
 const addFormValidation = new FormValidator(validationConfig, formElementAdd);
@@ -61,19 +62,21 @@ const openPlace = () => {
 };
 
 buttonEdit.addEventListener('click', openProfile);
-
 buttonAdd.addEventListener('click', openPlace);
 
 const makeNewCard = (data) => {
   const card = new Card(data, handleCardClick);
   const cardElement = card.generateCard();
-  newCard.addItem(cardElement);
-  // return cardElement;
+  return cardElement;
+};
+
+const addNewCard = (data) => {
+  newCard.addItem(makeNewCard(data));
 };
 
 /*---------------------Открытие попапа с картинкой-------------------------*/
 const handleCardClick = (image, name) => {
-  imagePop.open(image, name);
+  imagePopup.open(image, name);
 };
 
 const editProfileInformation = () => {
@@ -85,9 +88,7 @@ const newCard = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const card = new Card(item, handleCardClick);
-      const cardElement = card.generateCard();
-      newCard.addItem(cardElement);
+      newCard.addItem(makeNewCard(item));
     },
   },
   cardContainer
@@ -96,9 +97,8 @@ const newCard = new Section(
 newCard.renderItems();
 
 const edditPopup = new PopupWithForm(popEdit, editProfileInformation);
-const placeAddPopup = new PopupWithForm(placePop, makeNewCard);
+const placeAddPopup = new PopupWithForm(placePop, addNewCard);
 const imagePopup = new PopupWithImage(popupImageContainer);
-const imagePop = new PopupWithImage(popupImageContainer);
 
 edditPopup.setEventListeners();
 placeAddPopup.setEventListeners();
