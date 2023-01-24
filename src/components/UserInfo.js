@@ -1,9 +1,8 @@
 export default class UserInfo {
-  constructor({ name, description }) {
+  constructor({ name, description, avatar }) {
     this._userName = name;
     this._userDescription = description;
-    // console.log(name);
-    // console.log(description);
+    this._avatar = avatar;
   }
 
   getUserInfo() {
@@ -11,12 +10,20 @@ export default class UserInfo {
       user: this._userName.textContent,
       description: this._userDescription.textContent,
     };
-    // console.log(this._data);
     return this._data;
   }
 
-  setUserInfo({ author, info }) {
-    this._userName.textContent = author;
-    this._userDescription.textContent = info;
+  setUserInfo() {
+    return fetch('https://nomoreparties.co/v1/cohort-58/users/me', {
+      headers: {
+        authorization: '0aba71cc-fce9-4c39-b3b0-8b4459f050db',
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        this._userName.textContent = result.name;
+        this._userDescription.textContent = result.about;
+        this._avatar.src = result.avatar;
+      });
   }
 }

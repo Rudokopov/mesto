@@ -1,8 +1,3 @@
-/* Хочу заранее принести извиниться за то, что 2 раза на абум сдавал работу без сверки по чек листу и отнял ваше и свое время
-обычно я так не поступаю :/
-И хочу поблагодарить за развернутые и понятые требования по проектной работе!)
-*/
-
 import './index.css';
 import { initialCards } from '../data/cardsArray.js';
 import { Card } from '../components/Card.js';
@@ -29,6 +24,7 @@ import {
   placePop,
   popupImageContainer,
   addPlaceSubmitButton,
+  userAvatar,
 } from '../components/constants';
 
 const addFormValidation = new FormValidator(validationConfig, formElementAdd);
@@ -45,6 +41,7 @@ editProfileFormaValidation.enableValidation();
 const userProfile = new UserInfo({
   name: userName,
   description: userDescription,
+  avatar: userAvatar,
 });
 
 const openProfile = () => {
@@ -103,3 +100,4 @@ const imagePopup = new PopupWithImage(popupImageContainer);
 edditPopup.setEventListeners();
 placeAddPopup.setEventListeners();
 imagePopup.setEventListeners();
+userProfile.setUserInfo();

@@ -2,6 +2,7 @@ export const userName = document.querySelector('.profile__user-name');
 export const userDescription = document.querySelector(
   '.profile__user-description'
 );
+export const userAvatar = document.querySelector('.profile__avatar');
 export const buttonEdit = document.querySelector('.profile__edit-button');
 export const userInput = document.querySelector('#user');
 export const descriptionInput = document.querySelector('#description');
