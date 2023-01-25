@@ -1,5 +1,4 @@
 import './index.css';
-import { initialCards } from '../data/cardsArray.js';
 import { Card } from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import Section from '../components/Section.js';
@@ -83,7 +82,6 @@ const editProfileInformation = () => {
 
 const newCard = new Section(
   {
-    items: initialCards,
     renderer: (item) => {
       newCard.addItem(makeNewCard(item));
     },
@@ -91,7 +89,21 @@ const newCard = new Section(
   cardContainer
 );
 
-newCard.renderItems();
+function getCards() {
+  return fetch('https://nomoreparties.co/v1/cohort-58/cards', {
+    headers: {
+      authorization: '0aba71cc-fce9-4c39-b3b0-8b4459f050db',
+    },
+  })
+    .then((res) => res.json())
+    .then((result) => {
+      result.forEach((img) => {
+        newCard.addItem(makeNewCard(img));
+      });
+    });
+}
+
+getCards();
 
 const edditPopup = new PopupWithForm(popEdit, editProfileInformation);
 const placeAddPopup = new PopupWithForm(placePop, addNewCard);

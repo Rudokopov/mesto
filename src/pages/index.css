@@ -37,3 +37,6 @@
 @import url(../blocks/popup/_animation/popup_animation.css);
 @import url(../blocks/error-message/error-message.css);
 @import url(../blocks/popup/__form-input-error/popup__form-input-error.css);
+@import url(../blocks/card/__tools/card__tools.css);
+@import url(../blocks/card/__heart-count/card__heart-count.css);
+

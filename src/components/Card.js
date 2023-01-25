@@ -1,8 +1,11 @@
+// import { get } from 'core-js/core/dict';
+
 class Card {
   constructor(data, handleCardClick) {
     this._element = this._getTemplate();
     this._name = data.name;
-    this._image = data.image;
+    this._image = data.link;
+    this._likes = data.likes;
     this._likeButton = this._element.querySelector('.card__heart-button');
     this._handleCardClick = handleCardClick;
   }
@@ -47,13 +50,6 @@ class Card {
   _handleCardLike() {
     this._likeButton.classList.toggle('card__heart-button_active');
   }
-
-  // _openPreviewCard() {
-  //   popupImage.querySelector('.popup-image__photo').src = this._image;
-  //   popupImage.querySelector('.popup-image__photo').alt = this._name;
-  //   popupImage.querySelector('.popup-image__text').textContent = this._name;
-  //   openPopup(popupImage);
-  // }
 
   /*------------------------------Создаем карточку------------------------------------*/
 
