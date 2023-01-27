@@ -9,21 +9,14 @@ export default class UserInfo {
     this._data = {
       user: this._userName.textContent,
       description: this._userDescription.textContent,
+      avatar: this._avatar,
     };
     return this._data;
   }
 
-  setUserInfo() {
-    return fetch('https://nomoreparties.co/v1/cohort-58/users/me', {
-      headers: {
-        authorization: '0aba71cc-fce9-4c39-b3b0-8b4459f050db',
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        this._userName.textContent = result.name;
-        this._userDescription.textContent = result.about;
-        this._avatar.src = result.avatar;
-      });
+  setUserInfo(data) {
+    this._userName.textContent = data.name;
+    this._userDescription.textContent = data.about;
+    this._avatar.src = data.avatar;
   }
 }

@@ -1,19 +1,62 @@
-class Api {
-  constructor(options) {
-    // тело конструктора
+import { info } from 'autoprefixer';
+
+export default class Api {
+  constructor({ url, headers }) {
+    this._url = url;
+    this._headers = headers;
+  }
+
+  getMyUserId() {
+    return fetch(`${this._url}/users/me`, {
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    });
   }
 
   getInitialCards() {
-    // ...
+    return fetch(`${this._url}/cards`, {
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    });
+  }
+
+  addNewCard({ name, link }) {
+    return fetch(`${this._url}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        link: link,
+      }),
+    });
+  }
+
+  getProfileInfo() {
+    return fetch(`${this._url}/users/me`, {
+      headers: this._headers,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    });
+  }
+
+  changeProfileInfo({ author, info }) {
+    return fetch(`${this._url}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: author,
+        about: info,
+      }),
+    });
   }
 
   // другие методы работы с API
 }
-
-const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-58',
-  headers: {
-    authorization: '0aba71cc-fce9-4c39-b3b0-8b4459f050db',
-    'Content-Type': 'application/json',
-  },
-});

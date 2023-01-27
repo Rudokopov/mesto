@@ -1,13 +1,17 @@
 // import { get } from 'core-js/core/dict';
 
+import Popup from './Popup';
+
 class Card {
-  constructor(data, handleCardClick) {
+  constructor(data, userId, handleCardClick, deleteCardAccepted) {
     this._element = this._getTemplate();
     this._name = data.name;
     this._image = data.link;
-    this._likes = data.likes;
     this._likeButton = this._element.querySelector('.card__heart-button');
+    this._trushButton = this._element.querySelector('.card__trash-button');
     this._handleCardClick = handleCardClick;
+    this._deleteCard = deleteCardAccepted;
+    this._userId = userId;
   }
 
   _getTemplate() {
@@ -22,11 +26,9 @@ class Card {
   /*------------------------------Устанавливаем слушатели------------------------------------*/
 
   _setEventListeners() {
-    this._element
-      .querySelector('.card__trash-button')
-      .addEventListener('click', () => {
-        this._handleDeleteCard();
-      });
+    this._trushButton.addEventListener('click', () => {
+      this._deleteCard();
+    });
 
     this._likeButton.addEventListener('click', () => {
       this._handleCardLike();
@@ -53,13 +55,20 @@ class Card {
 
   /*------------------------------Создаем карточку------------------------------------*/
 
-  generateCard() {
+  generateCard(data) {
     this._setEventListeners();
     this._cardImage = this._element.querySelector('.card__image');
 
     this._cardImage.src = this._image;
     this._cardImage.alt = this._name;
+
+    if (this._userId !== data.owner._id) {
+      this._trushButton.remove();
+    }
+
     this._element.querySelector('.card__description').textContent = this._name;
+    this._element.querySelector('.card__heart-count').textContent =
+      data.likes.length;
 
     return this._element;
   }
