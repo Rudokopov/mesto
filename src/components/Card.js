@@ -3,15 +3,23 @@
 import Popup from './Popup';
 
 class Card {
-  constructor(data, userId, handleCardClick, deleteCardAccepted) {
+  constructor({
+    data,
+    userId,
+    handleCardClick,
+    handleDeleteCard,
+    deleteCardAccepted,
+  }) {
     this._element = this._getTemplate();
     this._name = data.name;
     this._image = data.link;
     this._likeButton = this._element.querySelector('.card__heart-button');
     this._trushButton = this._element.querySelector('.card__trash-button');
     this._handleCardClick = handleCardClick;
-    this._deleteCard = deleteCardAccepted;
+    this._deleteCard = handleDeleteCard;
+    this._checkAccepted = deleteCardAccepted;
     this._userId = userId;
+    this._cardId = data._id;
   }
 
   _getTemplate() {
@@ -27,7 +35,8 @@ class Card {
 
   _setEventListeners() {
     this._trushButton.addEventListener('click', () => {
-      this._deleteCard();
+      // this._checkAccepted();
+      this._deleteCard(this._cardId);
     });
 
     this._likeButton.addEventListener('click', () => {
@@ -42,14 +51,18 @@ class Card {
   }
 
   /*------------------------------Функции------------------------------------*/
+
   // Удаление карточек
-  _handleDeleteCard() {
+  deleteCard() {
     this._element.remove();
     this._element = null;
   }
 
   // Лайк карточке
   _handleCardLike() {
+    // if (this._cardId === this._cardId) {
+    //   this._likeButton.classList.add('card__heart-button_active');
+    // }
     this._likeButton.classList.toggle('card__heart-button_active');
   }
 

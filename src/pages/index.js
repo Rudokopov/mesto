@@ -29,9 +29,11 @@ import {
   userAvatar,
   popupClose,
   popupAcceptButton,
-} from '../components/constants';
+} from '../components/constants.js';
 import { data } from 'autoprefixer';
-import Popup from '../components/Popup';
+import Popup from '../components/Popup.js';
+
+import SubmitPopup from '../components/SubmitPopup.js';
 
 const serverDate = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-58',
@@ -54,20 +56,12 @@ editProfileFormaValidation.enableValidation();
 
 /*----------------------------Статичный функционал--------------------------------------*/
 
-// Получаем свой userID
-const getUserID = (userId) => {
-  serverDate.getMyUserId().then((data) => {
-    userId = data._id;
-  });
+// let boolean = 0;
 
-  return userId;
-};
-
-getUserID();
-
-// Устанавливаем данные для профиля
-// const getMeUserInfo = () => {
-//   serverDate.getProfileInfo().then((res) => userProfile.setUserInfo(res));
+// const isYes = (evt) => {
+//   if (evt.target.closest('.popup__form-accept-button')) {
+//     return (boolean = 1);
+//   }
 // };
 
 const userProfile = new UserInfo({
@@ -110,7 +104,7 @@ const pushNewCard = () => {
       }
     })
     .then((result) => {
-      addNewCard(result);
+      addNewCardToMarkdown(result);
     })
     .catch((err) => console.log(`Упс ${err}`));
 };
@@ -125,7 +119,20 @@ buttonEdit.addEventListener('click', openProfile);
 buttonAdd.addEventListener('click', openPlace);
 
 const makeNewCard = (data) => {
-  const card = new Card(data, userId, handleCardClick, deleteCardAccepted);
+  const card = new Card({
+    data,
+    userId,
+    handleCardClick,
+    handleDeleteCard: (id) => {
+      closePopup.open();
+      closePopup.setSubmitAction(() => {
+        serverDate.deleteCard(id).then(() => {
+          card.deleteCard();
+          closePopup.close();
+        });
+      });
+    },
+  });
   const cardElement = card.generateCard(data);
 
   return cardElement;
@@ -133,6 +140,10 @@ const makeNewCard = (data) => {
 
 const addNewCard = (data) => {
   newCard.addItem(makeNewCard(data));
+};
+
+const addNewCardToMarkdown = (data) => {
+  newCard.addItemToMarkdown(makeNewCard(data));
 };
 
 const getMeAllCards = (mass) => {
@@ -167,6 +178,10 @@ const handleCardClick = (image, name) => {
   imagePopup.open(image, name);
 };
 
+const handleDeleteCard = (evt) => {
+  evt.target.closest('card').remove();
+};
+
 const deleteCardAccepted = () => {
   closePopup.open();
 };
@@ -174,9 +189,9 @@ const deleteCardAccepted = () => {
 const edditPopup = new PopupWithForm(popEdit, editProfileInformation);
 const placeAddPopup = new PopupWithForm(placePop, pushNewCard);
 const imagePopup = new PopupWithImage(popupImageContainer);
-const closePopup = new Popup(popupClose);
+const closePopup = new SubmitPopup(popupClose, deleteCardAccepted);
 
 edditPopup.setEventListeners();
 placeAddPopup.setEventListeners();
 imagePopup.setEventListeners();
-userProfile.setUserInfo();
+closePopup.setEventListeners();
