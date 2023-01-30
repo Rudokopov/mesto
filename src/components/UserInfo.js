@@ -19,4 +19,8 @@ export default class UserInfo {
     this._userDescription.textContent = data.about;
     this._avatar.src = data.avatar;
   }
+
+  changeAvatar(data) {
+    this._avatar.src = data.avatar;
+  }
 }

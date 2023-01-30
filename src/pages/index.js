@@ -29,6 +29,10 @@ import {
   userAvatar,
   popupClose,
   popupAcceptButton,
+  formElementAvatar,
+  avatarLinkInput,
+  avatarPop,
+  avatarButton,
 } from '../components/constants.js';
 import { data } from 'autoprefixer';
 import Popup from '../components/Popup.js';
@@ -54,15 +58,14 @@ const editProfileFormaValidation = new FormValidator(
 );
 editProfileFormaValidation.enableValidation();
 
+const avatarFormaValidate = new FormValidator(
+  validationConfig,
+  formElementAvatar
+);
+
+avatarFormaValidate.enableValidation();
+
 /*----------------------------Статичный функционал--------------------------------------*/
-
-// let boolean = 0;
-
-// const isYes = (evt) => {
-//   if (evt.target.closest('.popup__form-accept-button')) {
-//     return (boolean = 1);
-//   }
-// };
 
 const userProfile = new UserInfo({
   name: userName,
@@ -80,33 +83,61 @@ const openProfile = () => {
 
 // Добавляет изменения в форму пользователя
 const editProfileInformation = () => {
-  const data = { author: userInput.value, info: descriptionInput.value };
+  const data = {
+    author: userInput.value,
+    info: descriptionInput.value,
+  };
+  edditPopup.loading(true);
   serverDate
     .changeProfileInfo(data)
     .then((res) => {
       if (res.ok) {
         return res.json();
       }
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
     })
+
     .then((result) => {
       userProfile.setUserInfo(result);
     })
-    .catch((err) => console.log(`Упс ${err}`));
+    .catch((err) => console.log(err))
+    .finally(() => edditPopup.loading(false));
 };
 
 const pushNewCard = () => {
   const data = { name: placeNameInput.value, link: placeLinkInput.value };
+  placeAddPopup.loading(true);
   serverDate
     .addNewCard(data)
     .then((res) => {
       if (res.ok) {
         return res.json();
       }
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
     })
     .then((result) => {
       addNewCardToMarkdown(result);
     })
-    .catch((err) => console.log(`Упс ${err}`));
+    .catch((err) => console.log(err))
+    .finally(() => placeAddPopup.loading(false));
+};
+
+const pushNewAvatar = () => {
+  const link = avatarLinkInput.value;
+  avatarPopup.loading(true);
+  serverDate
+    .setNewAvatar(link)
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
+    })
+    .then(() => {
+      userAvatar.src = link;
+    })
+    .catch((err) => console.log(err))
+    .finally(() => avatarPopup.loading(false));
 };
 
 const openPlace = () => {
@@ -115,8 +146,15 @@ const openPlace = () => {
   placeAddPopup.open();
 };
 
+const openAvatarPopup = () => {
+  formElementAvatar.reset();
+  avatarPopup.open();
+  avatarFormaValidate.disableSubmitButton();
+};
+
 buttonEdit.addEventListener('click', openProfile);
 buttonAdd.addEventListener('click', openPlace);
+avatarButton.addEventListener('click', openAvatarPopup);
 
 const makeNewCard = (data) => {
   const card = new Card({
@@ -132,6 +170,8 @@ const makeNewCard = (data) => {
         });
       });
     },
+    handlePutLike,
+    handleDeleteLike,
   });
   const cardElement = card.generateCard(data);
 
@@ -151,16 +191,6 @@ const getMeAllCards = (mass) => {
     newCard.addItem(makeNewCard(item));
   });
 };
-
-Promise.all([serverDate.getInitialCards(), serverDate.getProfileInfo()]).then(
-  ([cards, userData]) => {
-    userProfile.setUserInfo(userData);
-
-    userId = userData._id;
-
-    getMeAllCards(cards);
-  }
-);
 
 const newCard = new Section(
   {
@@ -186,12 +216,32 @@ const deleteCardAccepted = () => {
   closePopup.open();
 };
 
+const handlePutLike = (id) => {
+  return serverDate.likeCard(id);
+};
+
+const handleDeleteLike = (id) => {
+  return serverDate.deleteLike(id);
+};
+
+Promise.all([serverDate.getInitialCards(), serverDate.getProfileInfo()])
+  .then(([cards, userData]) => {
+    userProfile.setUserInfo(userData);
+
+    userId = userData._id;
+
+    getMeAllCards(cards);
+  })
+  .catch((err) => console.log(err));
+
 const edditPopup = new PopupWithForm(popEdit, editProfileInformation);
 const placeAddPopup = new PopupWithForm(placePop, pushNewCard);
 const imagePopup = new PopupWithImage(popupImageContainer);
 const closePopup = new SubmitPopup(popupClose, deleteCardAccepted);
+const avatarPopup = new PopupWithForm(avatarPop, pushNewAvatar);
 
 edditPopup.setEventListeners();
 placeAddPopup.setEventListeners();
 imagePopup.setEventListeners();
 closePopup.setEventListeners();
+avatarPopup.setEventListeners();

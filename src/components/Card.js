@@ -9,15 +9,27 @@ class Card {
     handleCardClick,
     handleDeleteCard,
     deleteCardAccepted,
+    handlePutLike,
+    handleDeleteLike,
   }) {
     this._element = this._getTemplate();
+    this._data = data;
     this._name = data.name;
     this._image = data.link;
+    this._likes = data.likes;
+    this._avatar = data.avatar;
+
     this._likeButton = this._element.querySelector('.card__heart-button');
+    this._likeCount = this._element.querySelector('.card__heart-count');
     this._trushButton = this._element.querySelector('.card__trash-button');
+
     this._handleCardClick = handleCardClick;
     this._deleteCard = handleDeleteCard;
     this._checkAccepted = deleteCardAccepted;
+
+    this._putLike = handlePutLike;
+    this._deleteLike = handleDeleteLike;
+
     this._userId = userId;
     this._cardId = data._id;
   }
@@ -40,7 +52,7 @@ class Card {
     });
 
     this._likeButton.addEventListener('click', () => {
-      this._handleCardLike();
+      this._handleLike();
     });
 
     this._element
@@ -59,11 +71,41 @@ class Card {
   }
 
   // Лайк карточке
-  _handleCardLike() {
-    // if (this._cardId === this._cardId) {
-    //   this._likeButton.classList.add('card__heart-button_active');
-    // }
-    this._likeButton.classList.toggle('card__heart-button_active');
+  _handleLike() {
+    if (this._checkMassLikes()) {
+      this._deleteLike(this._data).then((res) => {
+        this._data = res;
+        this._checkLikes();
+      });
+    }
+    if (!this._checkMassLikes()) {
+      this._putLike(this._data).then((res) => {
+        this._data = res;
+        this._checkLikes();
+      });
+    }
+  }
+
+  _checkLikes() {
+    this._likeCount.textContent = this._data.likes.length;
+    this._result = this._checkMassLikes();
+    if (this._result) {
+      this._cardLike();
+    } else {
+      this._cardDeleteLike();
+    }
+  }
+
+  _cardLike() {
+    this._likeButton.classList.add('card__heart-button_active');
+  }
+
+  _cardDeleteLike() {
+    this._likeButton.classList.remove('card__heart-button_active');
+  }
+
+  _checkMassLikes() {
+    return this._data.likes.some((id) => id._id === this._userId);
   }
 
   /*------------------------------Создаем карточку------------------------------------*/
@@ -77,6 +119,10 @@ class Card {
 
     if (this._userId !== data.owner._id) {
       this._trushButton.remove();
+    }
+
+    if (this._checkMassLikes()) {
+      this._cardLike();
     }
 
     this._element.querySelector('.card__description').textContent = this._name;

@@ -5,6 +5,10 @@ export default class PopupWithForm extends Popup {
     super(popup);
     this._handleSubmitForm = handleSubmitForm;
     this._inputList = this._popup.querySelectorAll('.popup__form-input');
+
+    this._popupButton = this._popup.querySelector('.popup__form-submtit');
+    this._popupButtonValue = this._popupButton.value;
+
     super.close();
   }
 
@@ -14,6 +18,14 @@ export default class PopupWithForm extends Popup {
       return (this._data[item.id] = item.value);
     });
     return this._data;
+  }
+
+  loading(isLoading) {
+    if (isLoading) {
+      this._popupButton.value = 'Сохранение...';
+    } else {
+      this._popupButton.value = this._popupButtonValue;
+    }
   }
   // Прогоняем массив для установки значений в инпутах редактирования пользователя
   setInputValues(data) {

@@ -4,12 +4,8 @@ export default class SubmitPopup extends Popup {
   constructor(popup) {
     super(popup);
     this._form = this._popup.querySelector('#close-form');
-    this._button = document.querySelector('.popup__form-accept-button');
+    this._acceptButton = document.querySelector('.popup__form-accept-button');
   }
-
-  // getId(id) {
-  //   this._id = id;
-  // }
 
   setSubmitAction(action) {
     this._handleSubmitCallback = action;

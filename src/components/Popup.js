@@ -3,7 +3,6 @@ export default class Popup {
     this._popup = popup;
     this._closeButton = this._popup.querySelector('.popup__form-close-button');
     this._handleEscClose = this._handleEscClose.bind(this);
-    // this._acceptedKey = this._popup.querySelector('.popup__form-accept-button');
   }
 
   open() {

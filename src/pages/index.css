@@ -40,4 +40,6 @@
 @import url(../blocks/card/__tools/card__tools.css);
 @import url(../blocks/card/__heart-count/card__heart-count.css);
 @import url(../blocks/popup/__form-accept-button/popup__form-accept-button.css);
+@import url(../blocks/profile/__avatar-wrap-button/profile__avatar-wrap-button.css);
+@import url(../blocks/profile/__avatar-wrap/profile__avatar-wrap.css);
 

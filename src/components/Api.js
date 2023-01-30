@@ -6,24 +6,23 @@ export default class Api {
     this._headers = headers;
   }
 
+  _checkStatus(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Что-то пошло не так: ${res.status}`);
+  }
+
   getMyUserId() {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    });
+    }).then(this._checkStatus);
   }
 
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    });
+    }).then(this._checkStatus);
   }
 
   addNewCard({ name, link }) {
@@ -40,11 +39,7 @@ export default class Api {
   getProfileInfo() {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    });
+    }).then(this._checkStatus);
   }
 
   changeProfileInfo({ author, info }) {
@@ -62,34 +57,30 @@ export default class Api {
     return fetch(`${this._url}/cards/${id}`, {
       method: 'DELETE',
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    });
+    }).then(this._checkStatus);
   }
 
   likeCard(id) {
-    return fetch(`${this._url}/cards/${id}/likes`, {
+    return fetch(`${this._url}/cards/${id._id}/likes`, {
       method: 'PUT',
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    });
+    }).then(this._checkStatus);
   }
 
   deleteLike(id) {
-    return fetch(`${this._url}/cards/${id}/likes`, {
+    return fetch(`${this._url}/cards/${id._id}/likes`, {
       method: 'DELETE',
       headers: this._headers,
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    });
+    }).then(this._checkStatus);
   }
 
-  // другие методы работы с API
+  setNewAvatar(link) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: link,
+      }),
+    });
+  }
 }
