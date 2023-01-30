@@ -33,7 +33,7 @@ import {
   avatarLinkInput,
   avatarPop,
   avatarButton,
-} from '../components/constants.js';
+} from '../utils/constants';
 import { data } from 'autoprefixer';
 import Popup from '../components/Popup.js';
 
@@ -90,13 +90,6 @@ const editProfileInformation = () => {
   edditPopup.loading(true);
   serverDate
     .changeProfileInfo(data)
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    })
-
     .then((result) => {
       userProfile.setUserInfo(result);
     })
@@ -109,12 +102,6 @@ const pushNewCard = () => {
   placeAddPopup.loading(true);
   serverDate
     .addNewCard(data)
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    })
     .then((result) => {
       addNewCardToMarkdown(result);
     })
@@ -127,12 +114,6 @@ const pushNewAvatar = () => {
   avatarPopup.loading(true);
   serverDate
     .setNewAvatar(link)
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    })
     .then(() => {
       userAvatar.src = link;
     })

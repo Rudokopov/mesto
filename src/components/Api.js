@@ -33,7 +33,7 @@ export default class Api {
         name: name,
         link: link,
       }),
-    });
+    }).then(this._checkStatus);
   }
 
   getProfileInfo() {
@@ -50,7 +50,7 @@ export default class Api {
         name: author,
         about: info,
       }),
-    });
+    }).then(this._checkStatus);
   }
 
   deleteCard(id) {
@@ -81,6 +81,6 @@ export default class Api {
       body: JSON.stringify({
         avatar: link,
       }),
-    });
+    }).then(this._checkStatus);
   }
 }
