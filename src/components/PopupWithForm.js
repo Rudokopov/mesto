@@ -3,13 +3,12 @@ import Popup from './Popup.js';
 export default class PopupWithForm extends Popup {
   constructor(popup, handleSubmitForm) {
     super(popup);
+    this._form = this._popup.querySelector('.popup__form');
     this._handleSubmitForm = handleSubmitForm;
     this._inputList = this._popup.querySelectorAll('.popup__form-input');
 
     this._popupButton = this._popup.querySelector('.popup__form-submtit');
     this._popupButtonValue = this._popupButton.value;
-
-    super.close();
   }
 
   _getInputValues() {
@@ -34,11 +33,17 @@ export default class PopupWithForm extends Popup {
     });
   }
 
+  close() {
+    super.close(),
+      setTimeout(() => {
+        this._form.reset();
+      }, 500); // Сделал задержку, потому что при изменении в форме пользователя после сохранения поля сразу очищаются)
+  }
+
   setEventListeners() {
     this._popup.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._handleSubmitForm(this._getInputValues());
-      this.close();
     });
     super.setEventListeners();
   }

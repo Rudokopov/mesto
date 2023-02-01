@@ -1,7 +1,3 @@
-// import { get } from 'core-js/core/dict';
-
-import Popup from './Popup';
-
 class Card {
   constructor({
     data,
@@ -11,14 +7,17 @@ class Card {
     deleteCardAccepted,
     handlePutLike,
     handleDeleteLike,
+    cardTemplate,
   }) {
-    this._element = this._getTemplate();
+    this._cardTemplate = cardTemplate;
+    this._element = cardTemplate.cloneNode(true);
     this._data = data;
     this._name = data.name;
     this._image = data.link;
     this._likes = data.likes;
     this._avatar = data.avatar;
 
+    this._cardImage = this._element.querySelector('.card__image');
     this._likeButton = this._element.querySelector('.card__heart-button');
     this._likeCount = this._element.querySelector('.card__heart-count');
     this._trushButton = this._element.querySelector('.card__trash-button');
@@ -34,20 +33,10 @@ class Card {
     this._cardId = data._id;
   }
 
-  _getTemplate() {
-    const cardElement = document
-      .querySelector('#card')
-      .content.querySelector('.card')
-      .cloneNode(true);
-
-    return cardElement;
-  }
-
   /*------------------------------Устанавливаем слушатели------------------------------------*/
 
   _setEventListeners() {
     this._trushButton.addEventListener('click', () => {
-      // this._checkAccepted();
       this._deleteCard(this._cardId);
     });
 
@@ -55,11 +44,9 @@ class Card {
       this._handleLike();
     });
 
-    this._element
-      .querySelector('.card__image')
-      .addEventListener('click', () => {
-        this._handleCardClick(this._image, this._name);
-      });
+    this._cardImage.addEventListener('click', () => {
+      this._handleCardClick(this._image, this._name);
+    });
   }
 
   /*------------------------------Функции------------------------------------*/
@@ -73,16 +60,20 @@ class Card {
   // Лайк карточке
   _handleLike() {
     if (this._checkMassLikes()) {
-      this._deleteLike(this._data).then((res) => {
-        this._data = res;
-        this._checkLikes();
-      });
+      this._deleteLike(this._data)
+        .then((res) => {
+          this._data = res;
+          this._checkLikes();
+        })
+        .catch((err) => console.log(err));
     }
     if (!this._checkMassLikes()) {
-      this._putLike(this._data).then((res) => {
-        this._data = res;
-        this._checkLikes();
-      });
+      this._putLike(this._data)
+        .then((res) => {
+          this._data = res;
+          this._checkLikes();
+        })
+        .catch((err) => console.log(err));
     }
   }
 
@@ -112,7 +103,6 @@ class Card {
 
   generateCard(data) {
     this._setEventListeners();
-    this._cardImage = this._element.querySelector('.card__image');
 
     this._cardImage.src = this._image;
     this._cardImage.alt = this._name;
@@ -126,8 +116,7 @@ class Card {
     }
 
     this._element.querySelector('.card__description').textContent = this._name;
-    this._element.querySelector('.card__heart-count').textContent =
-      data.likes.length;
+    this._likeCount.textContent = data.likes.length;
 
     return this._element;
   }

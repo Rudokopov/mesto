@@ -11,6 +11,9 @@ export const placeLinkInput = document.querySelector('.popup__form-place-link');
 export const avatarLinkInput = document.querySelector(
   '.popup__form-avatar-link'
 );
+export const cardTemplate = document
+  .querySelector('#card')
+  .content.querySelector('.card');
 export const formElementEdit = document.querySelector('.popup__form-edit');
 export const formElementAdd = document.querySelector('.popup__form-add');
 export const formElementAvatar = document.querySelector('.popup__form-avatar');

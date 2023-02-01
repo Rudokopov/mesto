@@ -33,13 +33,12 @@ import {
   avatarLinkInput,
   avatarPop,
   avatarButton,
+  cardTemplate,
 } from '../utils/constants';
-import { data } from 'autoprefixer';
-import Popup from '../components/Popup.js';
 
 import SubmitPopup from '../components/SubmitPopup.js';
 
-const serverDate = new Api({
+const apiService = new Api({
   url: 'https://mesto.nomoreparties.co/v1/cohort-58',
   headers: {
     authorization: '0aba71cc-fce9-4c39-b3b0-8b4459f050db',
@@ -71,6 +70,7 @@ const userProfile = new UserInfo({
   name: userName,
   description: userDescription,
   avatar: userAvatar,
+  id: userId,
 });
 
 const openProfile = () => {
@@ -88,10 +88,11 @@ const editProfileInformation = () => {
     info: descriptionInput.value,
   };
   edditPopup.loading(true);
-  serverDate
+  apiService
     .changeProfileInfo(data)
     .then((result) => {
       userProfile.setUserInfo(result);
+      edditPopup.close();
     })
     .catch((err) => console.log(err))
     .finally(() => edditPopup.loading(false));
@@ -100,10 +101,11 @@ const editProfileInformation = () => {
 const pushNewCard = () => {
   const data = { name: placeNameInput.value, link: placeLinkInput.value };
   placeAddPopup.loading(true);
-  serverDate
+  apiService
     .addNewCard(data)
     .then((result) => {
       addNewCardToMarkdown(result);
+      placeAddPopup.close();
     })
     .catch((err) => console.log(err))
     .finally(() => placeAddPopup.loading(false));
@@ -112,10 +114,11 @@ const pushNewCard = () => {
 const pushNewAvatar = () => {
   const link = avatarLinkInput.value;
   avatarPopup.loading(true);
-  serverDate
+  apiService
     .setNewAvatar(link)
     .then(() => {
       userAvatar.src = link;
+      avatarPopup.close();
     })
     .catch((err) => console.log(err))
     .finally(() => avatarPopup.loading(false));
@@ -141,11 +144,12 @@ const makeNewCard = (data) => {
   const card = new Card({
     data,
     userId,
+    cardTemplate,
     handleCardClick,
     handleDeleteCard: (id) => {
       closePopup.open();
       closePopup.setSubmitAction(() => {
-        serverDate.deleteCard(id).then(() => {
+        apiService.deleteCard(id).then(() => {
           card.deleteCard();
           closePopup.close();
         });
@@ -198,14 +202,14 @@ const deleteCardAccepted = () => {
 };
 
 const handlePutLike = (id) => {
-  return serverDate.likeCard(id);
+  return apiService.likeCard(id);
 };
 
 const handleDeleteLike = (id) => {
-  return serverDate.deleteLike(id);
+  return apiService.deleteLike(id);
 };
 
-Promise.all([serverDate.getInitialCards(), serverDate.getProfileInfo()])
+Promise.all([apiService.getInitialCards(), apiService.getProfileInfo()])
   .then(([cards, userData]) => {
     userProfile.setUserInfo(userData);
 
