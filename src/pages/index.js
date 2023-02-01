@@ -101,7 +101,7 @@ const pushNewCard = () => {
   apiService
     .addNewCard(placeAddPopup.getInputValues())
     .then((result) => {
-      newCard.addItem(result);
+      cardSection.addItem(result);
       placeAddPopup.close();
     })
     .catch((err) => console.log(err))
@@ -160,7 +160,7 @@ const makeNewCard = (data) => {
   return cardElement;
 };
 
-const newCard = new Section(
+const cardSection = new Section(
   {
     renderer: (item) => {
       const card = makeNewCard(item);
@@ -192,9 +192,7 @@ Promise.all([apiService.getInitialCards(), apiService.getProfileInfo()])
     userProfile.setUserInfo(userData);
 
     userId = userData._id;
-    cards.forEach((card) => {
-      newCard.addItemToMarkdown(card);
-    });
+    cardSection.renderItems(cards);
   })
   .catch((err) => console.log(err));
 
