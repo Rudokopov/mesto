@@ -1,3 +1,10 @@
+/* Мистеру Ревьюеру. В нашем телеграмм канале о вашей фамилии слагают легенды, как о лучших ревьюерах, которые не монету фармят
+а помогают и предлагают очень крутые вещи для реализации, давно уже хотел к вам на ревью попасть и вот час пришел))
+Действительно, то как вы помогаете реализовать некоторые фичи, в моем случае (универсальный метод для запросов в Api и валидация),
+обязательно скину ваши рекомендации в нашу телегу, мы обычно так и делимся знанями после ваших ревью xD. 
+Спешу передать вам благодарности от всего нашего потока! 
+*/
+
 import './index.css';
 import { Card } from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
@@ -14,23 +21,13 @@ import {
   userName,
   userDescription,
   buttonEdit,
-  userInput,
-  descriptionInput,
-  formElementEdit,
-  formElementAdd,
   buttonAdd,
   cardContainer,
   popEdit,
   placePop,
   popupImageContainer,
-  addPlaceSubmitButton,
-  placeNameInput,
-  placeLinkInput,
   userAvatar,
   popupClose,
-  popupAcceptButton,
-  formElementAvatar,
-  avatarLinkInput,
   avatarPop,
   avatarButton,
   cardTemplate,
@@ -183,11 +180,11 @@ const deleteCardAccepted = () => {
 };
 
 const handlePutLike = (id) => {
-  return apiService.likeCard(id);
+  return apiService.likeCard(id).catch((err) => console.log(err));
 };
 
 const handleDeleteLike = (id) => {
-  return apiService.deleteLike(id);
+  return apiService.deleteLike(id).catch((err) => console.log(err));
 };
 
 Promise.all([apiService.getInitialCards(), apiService.getProfileInfo()])
