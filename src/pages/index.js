@@ -48,41 +48,25 @@ const apiService = new Api({
 
 let userId = '';
 
-// const formValidators = {};
+const formValidators = {};
 
-// // Включение валидации
-// const enableValidation = (validationConfig) => {
-//   const formList = Array.from(
-//     document.querySelectorAll(validationConfig.currentForm)
-//   );
-//   formList.forEach((formElement) => {
-//     const validator = new FormValidator(formElement, validationConfig);
-//     // получаем данные из атрибута `name` у формы
-//     const formName = formElement.getAttribute('name');
+// Включение валидации
+const enableValidation = (validationConfig) => {
+  const formList = Array.from(
+    document.querySelectorAll(validationConfig.currentForm)
+  );
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(formElement, validationConfig);
+    // получаем данные из атрибута `name` у формы
+    const formName = formElement.getAttribute('name');
 
-//     // вот тут в объект записываем под именем формы
-//     formValidators[formName] = validator;
-//     validator.enableValidation();
-//   });
-// };
+    // вот тут в объект записываем под именем формы
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
 
-// enableValidation(validationConfig);
-
-const addFormValidation = new FormValidator(formElementAdd, validationConfig);
-addFormValidation.enableValidation();
-
-const editProfileFormaValidation = new FormValidator(
-  formElementEdit,
-  validationConfig
-);
-editProfileFormaValidation.enableValidation();
-
-const avatarFormaValidate = new FormValidator(
-  formElementAvatar,
-  validationConfig
-);
-
-avatarFormaValidate.enableValidation();
+enableValidation(validationConfig);
 
 /*----------------------------Статичный функционал--------------------------------------*/
 
@@ -96,7 +80,8 @@ const userProfile = new UserInfo({
 const openProfile = () => {
   const data = userProfile.getUserInfo();
   edditPopup.setInputValues(data);
-  editProfileFormaValidation.disableSubmitButton();
+  formValidators['form-edit'].resetValidation();
+  formValidators['form-edit'].disableSubmitButton();
 
   edditPopup.open();
 };
@@ -119,7 +104,7 @@ const pushNewCard = () => {
   apiService
     .addNewCard(placeAddPopup.getInputValues())
     .then((result) => {
-      addNewCardToMarkdown(result);
+      newCard.addItem(result);
       placeAddPopup.close();
     })
     .catch((err) => console.log(err))
@@ -139,13 +124,13 @@ const pushNewAvatar = () => {
 };
 
 const openPlace = () => {
-  addFormValidation.disableSubmitButton();
   placeAddPopup.open();
+  formValidators['form-place'].resetValidation();
 };
 
 const openAvatarPopup = () => {
   avatarPopup.open();
-  avatarFormaValidate.disableSubmitButton();
+  formValidators['form-avatar'].resetValidation();
 };
 
 buttonEdit.addEventListener('click', openProfile);
@@ -177,20 +162,6 @@ const makeNewCard = (data) => {
 
   return cardElement;
 };
-
-const addNewCard = (data) => {
-  newCard.addItem(makeNewCard(data));
-};
-
-const addNewCardToMarkdown = (data) => {
-  newCard.addItemToMarkdown(makeNewCard(data));
-};
-
-// const getMeAllCards = (mass) => {
-//   mass.forEach((item) => {
-//     newCard.addItem(makeNewCard(item));
-//   });
-// };
 
 const newCard = new Section(
   {
@@ -224,7 +195,9 @@ Promise.all([apiService.getInitialCards(), apiService.getProfileInfo()])
     userProfile.setUserInfo(userData);
 
     userId = userData._id;
-    newCard.renderItems(cards);
+    cards.forEach((card) => {
+      newCard.addItemToMarkdown(card);
+    });
   })
   .catch((err) => console.log(err));
 
