@@ -48,18 +48,38 @@ const apiService = new Api({
 
 let userId = '';
 
-const addFormValidation = new FormValidator(validationConfig, formElementAdd);
+// const formValidators = {};
+
+// // Включение валидации
+// const enableValidation = (validationConfig) => {
+//   const formList = Array.from(
+//     document.querySelectorAll(validationConfig.currentForm)
+//   );
+//   formList.forEach((formElement) => {
+//     const validator = new FormValidator(formElement, validationConfig);
+//     // получаем данные из атрибута `name` у формы
+//     const formName = formElement.getAttribute('name');
+
+//     // вот тут в объект записываем под именем формы
+//     formValidators[formName] = validator;
+//     validator.enableValidation();
+//   });
+// };
+
+// enableValidation(validationConfig);
+
+const addFormValidation = new FormValidator(formElementAdd, validationConfig);
 addFormValidation.enableValidation();
 
 const editProfileFormaValidation = new FormValidator(
-  validationConfig,
-  formElementEdit
+  formElementEdit,
+  validationConfig
 );
 editProfileFormaValidation.enableValidation();
 
 const avatarFormaValidate = new FormValidator(
-  validationConfig,
-  formElementAvatar
+  formElementAvatar,
+  validationConfig
 );
 
 avatarFormaValidate.enableValidation();
@@ -83,13 +103,9 @@ const openProfile = () => {
 
 // Добавляет изменения в форму пользователя
 const editProfileInformation = () => {
-  const data = {
-    author: userInput.value,
-    info: descriptionInput.value,
-  };
   edditPopup.loading(true);
   apiService
-    .changeProfileInfo(data)
+    .changeProfileInfo(edditPopup.getInputValues())
     .then((result) => {
       userProfile.setUserInfo(result);
       edditPopup.close();
@@ -99,10 +115,9 @@ const editProfileInformation = () => {
 };
 
 const pushNewCard = () => {
-  const data = { name: placeNameInput.value, link: placeLinkInput.value };
   placeAddPopup.loading(true);
   apiService
-    .addNewCard(data)
+    .addNewCard(placeAddPopup.getInputValues())
     .then((result) => {
       addNewCardToMarkdown(result);
       placeAddPopup.close();
@@ -112,12 +127,11 @@ const pushNewCard = () => {
 };
 
 const pushNewAvatar = () => {
-  const link = avatarLinkInput.value;
   avatarPopup.loading(true);
   apiService
-    .setNewAvatar(link)
-    .then(() => {
-      userAvatar.src = link;
+    .setNewAvatar(avatarPopup.getInputValues())
+    .then((result) => {
+      userProfile.setUserInfo(result);
       avatarPopup.close();
     })
     .catch((err) => console.log(err))
@@ -125,13 +139,11 @@ const pushNewAvatar = () => {
 };
 
 const openPlace = () => {
-  formElementAdd.reset();
   addFormValidation.disableSubmitButton();
   placeAddPopup.open();
 };
 
 const openAvatarPopup = () => {
-  formElementAvatar.reset();
   avatarPopup.open();
   avatarFormaValidate.disableSubmitButton();
 };
@@ -147,12 +159,15 @@ const makeNewCard = (data) => {
     cardTemplate,
     handleCardClick,
     handleDeleteCard: (id) => {
-      closePopup.open();
-      closePopup.setSubmitAction(() => {
-        apiService.deleteCard(id).then(() => {
-          card.deleteCard();
-          closePopup.close();
-        });
+      confirmationPopup.open();
+      confirmationPopup.setSubmitAction(() => {
+        apiService
+          .deleteCard(id)
+          .then(() => {
+            card.deleteCard();
+            confirmationPopup.close();
+          })
+          .catch((err) => console.log(err));
       });
     },
     handlePutLike,
@@ -171,18 +186,17 @@ const addNewCardToMarkdown = (data) => {
   newCard.addItemToMarkdown(makeNewCard(data));
 };
 
-const getMeAllCards = (mass) => {
-  mass.forEach((item) => {
-    newCard.addItem(makeNewCard(item));
-  });
-};
+// const getMeAllCards = (mass) => {
+//   mass.forEach((item) => {
+//     newCard.addItem(makeNewCard(item));
+//   });
+// };
 
 const newCard = new Section(
   {
     renderer: (item) => {
       const card = makeNewCard(item);
-      const cardElement = card.generateCard();
-      newCard.addItem(cardElement);
+      return card;
     },
   },
   cardContainer
@@ -193,12 +207,8 @@ const handleCardClick = (image, name) => {
   imagePopup.open(image, name);
 };
 
-const handleDeleteCard = (evt) => {
-  evt.target.closest('card').remove();
-};
-
 const deleteCardAccepted = () => {
-  closePopup.open();
+  confirmationPopup.open();
 };
 
 const handlePutLike = (id) => {
@@ -214,19 +224,18 @@ Promise.all([apiService.getInitialCards(), apiService.getProfileInfo()])
     userProfile.setUserInfo(userData);
 
     userId = userData._id;
-
-    getMeAllCards(cards);
+    newCard.renderItems(cards);
   })
   .catch((err) => console.log(err));
 
 const edditPopup = new PopupWithForm(popEdit, editProfileInformation);
 const placeAddPopup = new PopupWithForm(placePop, pushNewCard);
 const imagePopup = new PopupWithImage(popupImageContainer);
-const closePopup = new SubmitPopup(popupClose, deleteCardAccepted);
+const confirmationPopup = new SubmitPopup(popupClose, deleteCardAccepted);
 const avatarPopup = new PopupWithForm(avatarPop, pushNewAvatar);
 
 edditPopup.setEventListeners();
 placeAddPopup.setEventListeners();
 imagePopup.setEventListeners();
-closePopup.setEventListeners();
+confirmationPopup.setEventListeners();
 avatarPopup.setEventListeners();

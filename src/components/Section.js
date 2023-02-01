@@ -15,7 +15,7 @@ export default class Section {
 
   renderItems(mass) {
     mass.forEach((item) => {
-      this.addItem(item);
+      this.addItemToMarkdown(this._renderer(item));
     });
   }
 }

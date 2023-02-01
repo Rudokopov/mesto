@@ -25,13 +25,13 @@ export default class Api {
     }).then(this._checkStatus);
   }
 
-  addNewCard({ name, link }) {
+  addNewCard({ name, image }) {
     return fetch(`${this._url}/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
         name: name,
-        link: link,
+        link: image,
       }),
     }).then(this._checkStatus);
   }
@@ -42,13 +42,13 @@ export default class Api {
     }).then(this._checkStatus);
   }
 
-  changeProfileInfo({ author, info }) {
+  changeProfileInfo({ user, description }) {
     return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: author,
-        about: info,
+        name: user,
+        about: description,
       }),
     }).then(this._checkStatus);
   }
@@ -74,12 +74,12 @@ export default class Api {
     }).then(this._checkStatus);
   }
 
-  setNewAvatar(link) {
+  setNewAvatar({ imageAvatar }) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: link,
+        avatar: imageAvatar,
       }),
     }).then(this._checkStatus);
   }
