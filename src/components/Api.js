@@ -13,74 +13,78 @@ export default class Api {
     return Promise.reject(`Что-то пошло не так: ${res.status}`);
   }
 
+  _request(url, options) {
+    return fetch(url, options).then(this._checkStatus);
+  }
+
   getMyUserId() {
-    return fetch(`${this._url}/users/me`, {
+    this._request(`${this._url}/users/me`, {
       headers: this._headers,
-    }).then(this._checkStatus);
+    });
   }
 
   getInitialCards() {
-    return fetch(`${this._url}/cards`, {
+    return this._request(`${this._url}/cards`, {
       headers: this._headers,
-    }).then(this._checkStatus);
+    });
   }
 
   addNewCard({ name, image }) {
-    return fetch(`${this._url}/cards`, {
+    return this._request(`${this._url}/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
         name: name,
         link: image,
       }),
-    }).then(this._checkStatus);
+    });
   }
 
   getProfileInfo() {
-    return fetch(`${this._url}/users/me`, {
+    return this._request(`${this._url}/users/me`, {
       headers: this._headers,
-    }).then(this._checkStatus);
+    });
   }
 
   changeProfileInfo({ user, description }) {
-    return fetch(`${this._url}/users/me`, {
+    return this._request(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         name: user,
         about: description,
       }),
-    }).then(this._checkStatus);
+    });
   }
 
   deleteCard(id) {
-    return fetch(`${this._url}/cards/${id}`, {
+    return this._request(`${this._url}/cards/${id}`, {
       method: 'DELETE',
       headers: this._headers,
-    }).then(this._checkStatus);
+    });
   }
 
   likeCard(id) {
-    return fetch(`${this._url}/cards/${id._id}/likes`, {
+    return this._request(`${this._url}/cards/${id._id}/likes`, {
       method: 'PUT',
       headers: this._headers,
-    }).then(this._checkStatus);
+    });
   }
 
   deleteLike(id) {
-    return fetch(`${this._url}/cards/${id._id}/likes`, {
+    return this._request(`${this._url}/cards/${id._id}/likes`, {
       method: 'DELETE',
       headers: this._headers,
-    }).then(this._checkStatus);
+    });
   }
 
   setNewAvatar({ imageAvatar }) {
-    return fetch(`${this._url}/users/me/avatar`, {
+    return this._request(`${this._url}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         avatar: imageAvatar,
       }),
-    }).then(this._checkStatus);
+    });
   }
 }
